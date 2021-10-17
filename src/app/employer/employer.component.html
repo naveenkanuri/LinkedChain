@@ -1,0 +1,139 @@
+<div class="header" color="">
+  Welcome to Employer Portal!
+</div>
+
+<div *ngIf="!this.signer" class="connect-button">
+  <label>You have not connected!</label>
+</div>
+<div *ngIf="this.signer" class="connect-button">
+  <label>You have connected!</label>
+</div>
+<br/>
+
+<div *ngIf="!isEmployerRegistered" class="forms">
+  <form [formGroup]="EmployerForm" (ngSubmit)="addEmployer()">
+    <div class="addEmployer">
+      <!--      Employer Details-->
+      <label for="employerPublicKey">Employer Public Key</label>
+      <input id="employerPublicKey" type="text" formControlName="EmployerPublicKey">
+      <br/>
+      <label for="employerUniqueId">Employer Unique Id</label>
+      <input id="employerUniqueId" type="number" formControlName="EmployerUniqueId">
+      <br/>
+      <label for="employerName">Employer Name</label>
+      <input id="employerName" type="text" formControlName="EmployerName">
+      <br/>
+      <label for="employerAddress">Employer Address</label>
+      <input id="employerAddress" type="text" formControlName="EmployerAddress">
+      <br/>
+      <label for="employerPhone">Employer Phone Number</label>
+      <input id="employerPhone" type="number" formControlName="EmployerPhone">
+      <br/>
+      <label for="employerURL">Employer URL</label>
+      <input id="employerURL" type="text" formControlName="EmployerURL">
+      <br/>
+      <br/>
+
+      <button class="button" type="submit">Save</button>
+    </div>
+  </form>
+</div>
+<br/>
+<div *ngIf="isEmployerRegistered" class="EmployerDetails">
+  <label>Welcome {{employer._name}}</label>
+  <br/>
+  <label>Your public key : {{employer._publicKey}}</label>
+  <br/>
+  <label>Your Unique Id : {{employer._id}}</label>
+  <br/>
+  <label>Your phone number : {{employer._phoneNumber}}</label>
+  <br/>
+  <label>Your address : {{employer._address}}</label>
+  <br/>
+  <label>Your url : {{employer._url}}</label>
+  <br/>
+</div>
+
+<br/>
+<br/>
+
+<div *ngIf="isEmployerRegistered" style="margin:0 30px;">
+  <h2 style="text-align: center;">Approved</h2>
+  <table>
+    <tr>
+      <th>S.no</th>
+      <th>Employee Public Key</th>
+      <th>Employee Id</th>
+      <th>Designation</th>
+      <th>Salary</th>
+      <th>Project Title</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+    </tr>
+    <tr *ngFor="let exp of approvedExperiences; index as i">
+      <td>{{ i+1 }}</td>
+      <td>{{ exp._employeePublicKey }}</td>
+      <td>{{ exp._employeeId }}</td>
+      <td>{{ exp._designation }}</td>
+      <td>{{ exp._salary }}</td>
+      <td>{{ exp._projectTitle }}</td>
+      <td>{{ exp._startDate }}</td>
+      <td>{{ exp._endDate }}</td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="isEmployerRegistered" style="margin:0 30px;">
+  <h2 style="text-align: center;">Rejected</h2>
+  <table>
+    <tr>
+      <th>S.no</th>
+      <th>Employee Public Key</th>
+      <th>Employee Id</th>
+      <th>Designation</th>
+      <th>Salary</th>
+      <th>Project Title</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+    </tr>
+    <tr *ngFor="let exp of rejectedExperiences; index as i">
+      <td>{{ i+1 }}</td>
+      <td>{{ exp._employeePublicKey }}</td>
+      <td>{{ exp._employeeId }}</td>
+      <td>{{ exp._designation }}</td>
+      <td>{{ exp._salary }}</td>
+      <td>{{ exp._projectTitle }}</td>
+      <td>{{ exp._startDate }}</td>
+      <td>{{ exp._endDate }}</td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="isEmployerRegistered" style="margin:0 30px;">
+  <h2 style="text-align: center;">Pending</h2>
+  <table>
+    <tr>
+      <th>S.no</th>
+      <th>Employee Public Key</th>
+      <th>Employee Id</th>
+      <th>Designation</th>
+      <th>Salary</th>
+      <th>Project Title</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+    </tr>
+    <tr *ngFor="let exp of pendingExperiences; index as i">
+      <td>{{ i+1 }}</td>
+      <td>{{ exp._employeePublicKey }}</td>
+      <td>{{ exp._employeeId }}</td>
+      <td>{{ exp._designation }}</td>
+      <td>{{ exp._salary }}</td>
+      <td>{{ exp._projectTitle }}</td>
+      <td>{{ exp._startDate }}</td>
+      <td>{{ exp._endDate }}</td>
+      <input type="text" placeholder="Enter Comments" #input>
+      <button class="button" type="submit" (click)="approve(exp._expId, input.value)">Approve</button>
+      <button class="button" type="submit" (click)="reject(exp._expId, input.value)">Reject</button>
+    </tr>
+  </table>
+</div>
