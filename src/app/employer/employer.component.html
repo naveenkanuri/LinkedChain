@@ -1,61 +1,74 @@
-<div class="header" color="">
-  Welcome to Employer Portal!
+<div class="jumbotron jumbotron-fluid  text-center">
+
+  <div class="container">
+    <h1 class="display-4">Employer Registration</h1>
+    <p class="lead">Please enter your details as a potential employer.</p>
+  </div>
 </div>
 
-<div *ngIf="!this.signer" class="connect-button">
+<!-- <div *ngIf="!this.signer" class="connect-button ">
   <label>You have not connected!</label>
 </div>
 <div *ngIf="this.signer" class="connect-button">
   <label>You have connected!</label>
 </div>
-<br/>
+<br /> -->
 
-<div *ngIf="!isEmployerRegistered" class="forms">
-  <form [formGroup]="EmployerForm" (ngSubmit)="addEmployer()">
+<div *ngIf="!isEmployerRegistered" class="pt-4">
+  <form [formGroup]="EmployerForm" (ngSubmit)="addEmployer()"
+    class="d-flex form-group justify-content-center align-items-center shadow">
     <div class="addEmployer">
       <!--      Employer Details-->
       <label for="employerPublicKey">Employer Public Key</label>
-      <input id="employerPublicKey" type="text" formControlName="EmployerPublicKey">
-      <br/>
+      <input id="employerPublicKey" type="text" formControlName="EmployerPublicKey" class="m-2">
+      <br />
       <label for="employerUniqueId">Employer Unique Id</label>
-      <input id="employerUniqueId" type="number" formControlName="EmployerUniqueId">
-      <br/>
+      <input id="employerUniqueId" type="number" formControlName="EmployerUniqueId" class="m-2">
+      <br />
       <label for="employerName">Employer Name</label>
-      <input id="employerName" type="text" formControlName="EmployerName">
-      <br/>
+      <input id="employerName" type="text" formControlName="EmployerName" class="m-2">
+      <br />
       <label for="employerAddress">Employer Address</label>
-      <input id="employerAddress" type="text" formControlName="EmployerAddress">
-      <br/>
+      <input id="employerAddress" type="text" formControlName="EmployerAddress" class="m-2">
+      <br />
       <label for="employerPhone">Employer Phone Number</label>
-      <input id="employerPhone" type="number" formControlName="EmployerPhone">
-      <br/>
+      <input id="employerPhone" type="number" formControlName="EmployerPhone" class="m-2">
+      <br />
       <label for="employerURL">Employer URL</label>
-      <input id="employerURL" type="text" formControlName="EmployerURL">
-      <br/>
-      <br/>
+      <input id="employerURL" type="text" formControlName="EmployerURL" class="m-2">
+      <br />
+      <br />
+      <div class="d-flex form-group justify-content-center align-items-center">
+        <button mat-raised-button (click)="openDialog()">
+          Open Dialog Test
+        </button>
 
-      <button class="button" type="submit">Save</button>
+        <button class="button rounded-pill btn btn-primary mb-2" type="submit">Submit</button>
+      </div>
+
     </div>
   </form>
+
+
 </div>
-<br/>
+<br />
 <div *ngIf="isEmployerRegistered" class="EmployerDetails">
   <label>Welcome {{employer._name}}</label>
-  <br/>
+  <br />
   <label>Your public key : {{employer._publicKey}}</label>
-  <br/>
+  <br />
   <label>Your Unique Id : {{employer._id}}</label>
-  <br/>
+  <br />
   <label>Your phone number : {{employer._phoneNumber}}</label>
-  <br/>
+  <br />
   <label>Your address : {{employer._address}}</label>
-  <br/>
+  <br />
   <label>Your url : {{employer._url}}</label>
-  <br/>
+  <br />
 </div>
 
-<br/>
-<br/>
+<br />
+<br />
 
 <div *ngIf="isEmployerRegistered" style="margin:0 30px;">
   <h2 style="text-align: center;">Approved</h2>
