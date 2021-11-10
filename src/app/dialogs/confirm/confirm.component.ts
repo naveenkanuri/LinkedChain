@@ -1,3 +1,5 @@
+declare let window: any;
+
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -37,6 +39,7 @@ export class ConfirmComponent implements OnInit {
     console.log('DATA HAS BEEN ADDED::: ' + this.data.toString());
   }
   async ngOnInit() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
     console.log('on init');
     this.workExContract = new ethers.Contract(
       address.workExContract,
@@ -44,8 +47,5 @@ export class ConfirmComponent implements OnInit {
       this.signer
     );
     this.signerAddress = await this.signer.getAddress();
-    // this.employer = await this.workExContract.getEmployerDetails(
-    //   this.signerAddress
-    // );
   }
 }
