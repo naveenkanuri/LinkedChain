@@ -17,9 +17,9 @@
 <div *ngIf="!isEmployerRegistered" class="pt-4">
   <form [formGroup]="EmployerForm" (ngSubmit)="addEmployer()"
     class="d-flex form-group justify-content-center align-items-center shadow">
-    <div class="addEmployer">
+    <div class=" justify-content-center">
       <!--      Employer Details-->
-      <label for="employerPublicKey">Employer Public Key</label>
+      <label for="employerPublicKey" class="align-items-center">Employer Public Key</label>
       <input id="employerPublicKey" type="text" formControlName="EmployerPublicKey" class="m-2">
       <br />
       <label for="employerUniqueId">Employer Unique Id</label>
@@ -51,8 +51,10 @@
 
 
 </div>
+
+
 <br />
-<div *ngIf="isEmployerRegistered" class="EmployerDetails  justify-content-center align-items-center shadow">
+<div *ngIf="isEmployerRegistered" class="align-items-center shadow align-content-center p-4">
   <label>Welcome, {{employer._name}}</label>
   <br>
   <label>Your public key : {{employer._publicKey}}</label>
@@ -70,83 +72,102 @@
 <br />
 <br />
 
-<div *ngIf="isEmployerRegistered" style="margin:0 30px;">
-  <h2 style="text-align: center;">Approved</h2>
-  <table>
-    <tr>
-      <th>S.no</th>
-      <th>Employee Public Key</th>
-      <th>Employee Id</th>
-      <th>Designation</th>
-      <th>Salary</th>
-      <th>Project Title</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-    </tr>
-    <tr *ngFor="let exp of approvedExperiences; index as i">
-      <td>{{ i+1 }}</td>
-      <td>{{ exp._employeePublicKey }}</td>
-      <td>{{ exp._employeeId }}</td>
-      <td>{{ exp._designation }}</td>
-      <td>{{ exp._salary }}</td>
-      <td>{{ exp._projectTitle }}</td>
-      <td>{{ exp._startDate }}</td>
-      <td>{{ exp._endDate }}</td>
-    </tr>
-  </table>
-</div>
 
-<div *ngIf="isEmployerRegistered" style="margin:0 30px;">
-  <h2 style="text-align: center;">Rejected</h2>
-  <table>
-    <tr>
-      <th>S.no</th>
-      <th>Employee Public Key</th>
-      <th>Employee Id</th>
-      <th>Designation</th>
-      <th>Salary</th>
-      <th>Project Title</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-    </tr>
-    <tr *ngFor="let exp of rejectedExperiences; index as i">
-      <td>{{ i+1 }}</td>
-      <td>{{ exp._employeePublicKey }}</td>
-      <td>{{ exp._employeeId }}</td>
-      <td>{{ exp._designation }}</td>
-      <td>{{ exp._salary }}</td>
-      <td>{{ exp._projectTitle }}</td>
-      <td>{{ exp._startDate }}</td>
-      <td>{{ exp._endDate }}</td>
-    </tr>
-  </table>
-</div>
+<ngb-accordion #acc="ngbAccordion">
+  <ngb-panel id="toggle-1" title="Approved">
+    <ng-template ngbPanelContent>
+      <div *ngIf="isEmployerRegistered" style="margin:0 30px;">
+        <h2 style="text-align: center;">Approved</h2>
+        <table>
+          <tr>
+            <th>S.no</th>
+            <th>Employee Public Key</th>
+            <th>Employee Id</th>
+            <th>Designation</th>
+            <th>Salary</th>
+            <th>Project Title</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+          </tr>
+          <tr *ngFor="let exp of approvedExperiences; index as i">
+            <td>{{ i+1 }}</td>
+            <td>{{ exp._employeePublicKey }}</td>
+            <td>{{ exp._employeeId }}</td>
+            <td>{{ exp._designation }}</td>
+            <td>{{ exp._salary }}</td>
+            <td>{{ exp._projectTitle }}</td>
+            <td>{{ exp._startDate }}</td>
+            <td>{{ exp._endDate }}</td>
+          </tr>
+        </table>
+      </div>
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel id="toggle-2" title="Rejected">
+    <ng-template ngbPanelContent>
+      <div *ngIf="isEmployerRegistered" style="margin:0 30px;">
+        <h2 style="text-align: center;">Rejected</h2>
+        <table>
+          <tr>
+            <th>S.no</th>
+            <th>Employee Public Key</th>
+            <th>Employee Id</th>
+            <th>Designation</th>
+            <th>Salary</th>
+            <th>Project Title</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+          </tr>
+          <tr *ngFor="let exp of rejectedExperiences; index as i">
+            <td>{{ i+1 }}</td>
+            <td>{{ exp._employeePublicKey }}</td>
+            <td>{{ exp._employeeId }}</td>
+            <td>{{ exp._designation }}</td>
+            <td>{{ exp._salary }}</td>
+            <td>{{ exp._projectTitle }}</td>
+            <td>{{ exp._startDate }}</td>
+            <td>{{ exp._endDate }}</td>
+          </tr>
+        </table>
+      </div>
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel id="toggle-3" title="Pending">
+    <ng-template ngbPanelContent>
+      <div *ngIf="isEmployerRegistered" style="margin:0 30px;">
+        <h2 style="text-align: center;">Pending</h2>
+        <table>
+          <tr>
+            <th>S.no</th>
+            <th>Employee Public Key</th>
+            <th>Employee Id</th>
+            <th>Designation</th>
+            <th>Salary</th>
+            <th>Project Title</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+          </tr>
+          <tr *ngFor="let exp of pendingExperiences; index as i">
+            <td>{{ i+1 }}</td>
+            <td>{{ exp._employeePublicKey }}</td>
+            <td>{{ exp._employeeId }}</td>
+            <td>{{ exp._designation }}</td>
+            <td>{{ exp._salary }}</td>
+            <td>{{ exp._projectTitle }}</td>
+            <td>{{ exp._startDate }}</td>
+            <td>{{ exp._endDate }}</td>
+            <input type="text" placeholder="Enter Comments" #input>
+            <button class="button" type="submit" (click)="approve(exp._expId, input.value)">Approve</button>
+            <button class="button" type="submit" (click)="reject(exp._expId, input.value)">Reject</button>
+          </tr>
+        </table>
+      </div>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>
 
-<div *ngIf="isEmployerRegistered" style="margin:0 30px;">
-  <h2 style="text-align: center;">Pending</h2>
-  <table>
-    <tr>
-      <th>S.no</th>
-      <th>Employee Public Key</th>
-      <th>Employee Id</th>
-      <th>Designation</th>
-      <th>Salary</th>
-      <th>Project Title</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-    </tr>
-    <tr *ngFor="let exp of pendingExperiences; index as i">
-      <td>{{ i+1 }}</td>
-      <td>{{ exp._employeePublicKey }}</td>
-      <td>{{ exp._employeeId }}</td>
-      <td>{{ exp._designation }}</td>
-      <td>{{ exp._salary }}</td>
-      <td>{{ exp._projectTitle }}</td>
-      <td>{{ exp._startDate }}</td>
-      <td>{{ exp._endDate }}</td>
-      <input type="text" placeholder="Enter Comments" #input>
-      <button class="button" type="submit" (click)="approve(exp._expId, input.value)">Approve</button>
-      <button class="button" type="submit" (click)="reject(exp._expId, input.value)">Reject</button>
-    </tr>
-  </table>
-</div>
+<hr />
+
+<!-- <button class="btn btn-sm btn-outline-primary mr-2" (click)="acc.toggle('toggle-1')">Approved</button>
+<button class="btn btn-sm btn-outline-primary mr-2" (click)="acc.toggle('toggle-2')">Rejected</button>
+<button class="btn btn-sm btn-outline-primary mr-2" (click)="acc.toggle('toggle-3')">Pending</button> -->

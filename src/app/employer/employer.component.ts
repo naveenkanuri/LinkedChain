@@ -1,6 +1,6 @@
 declare let window: any;
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ethers } from 'ethers';
 import address from '../../../environment/contract-address.json';
@@ -186,4 +186,8 @@ export class EmployerComponent implements OnInit {
     const tx = await this.workExContract.rejectExperience(_expId, comments);
     tx.wait();
   }
+}
+
+export class NgbdAccordionHeader {
+  disabled = false;
 }
