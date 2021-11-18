@@ -1,4 +1,13 @@
-<div class="header" color="">
+<div class="jumbotron jumbotron-fluid  text-center">
+
+  <div class="container">
+    <h1 class="display-4">Employee Registration</h1>
+    <p class="lead">Please enter your details as a employee.</p>
+  </div>
+</div>
+
+
+<!-- <div class="header" color="">
   Welcome to Employee Portal!
 </div>
 
@@ -8,80 +17,87 @@
 <div *ngIf="this.signer" class="connect-button">
   <label>You have connected!</label>
   <br/>
-</div>
+</div> -->
 
 <!--<div class="employee">-->
 <!--  Employee Details = {{this.employerDetails}}-->
 <!--</div>-->
 
-<div *ngIf="!isEmployeeRegistered" class="forms">
-  <form [formGroup]="EmployeeForm" (ngSubmit)="addEmployee()">
+<div *ngIf="!isEmployeeRegistered" class="forms pt-4">
+  <form [formGroup]="EmployeeForm" (ngSubmit)="addEmployee()" class="d-flex form-group justify-content-center
+    align-items-center shadow">
     <div class="addEmployee">
-<!--      Employee Details-->
+      <!--      Employee Details-->
       <label for="employeeName">Employee Name</label>
-      <input id="employeeName" type="text" formControlName="EmployeeName">
-      <br/>
-      <label for="employeeId">Employee Aadhar Id</label>
-      <input id="employeeId" type="number" formControlName="EmployeeId">
-      <br/>
+      <input id="employeeName" type="text" formControlName="EmployeeName" class="m-2">
+      <br />
+      <label for="employeeId">Employee SSN</label>
+      <input id="employeeId" type="number" formControlName="EmployeeId" class="m-2">
+      <br />
       <label for="employeeAddress">Employee Address</label>
-      <input id="employeeAddress" type="text" formControlName="EmployeeAddress">
-      <br/>
+      <input id="employeeAddress" type="text" formControlName="EmployeeAddress" class="m-2">
+      <br />
       <label for="employeePhone">Employee Phone Number</label>
-      <input id="employeePhone" type="text" formControlName="EmployeePhone">
-      <br/>
+      <input id="employeePhone" type="text" formControlName="EmployeePhone" class="m-2">
+      <br />
       <label for="employeePublicKey">Employee Public Key</label>
-      <input id="employeePublicKey" type="text" formControlName="EmployeePublicKey">
-      <br/>
-      <br/>
-      <button class="button" type="submit">Save</button>
+      <input id="employeePublicKey" type="text" formControlName="EmployeePublicKey" class="m-2">
+      <br />
+      <br />
+      <div class="d-flex form-group justify-content-center align-items-center">
+        <button class="button rounded-pill btn btn-primary mb-2" mat-raised-button (click)="openDialog()">
+          Submit
+        </button>
+
+        <!-- <button class="button rounded-pill btn btn-primary mb-2" type="submit">Submit</button> -->
+      </div>
     </div>
   </form>
 </div>
 
-<br/>
+<br />
 <div *ngIf="isEmployeeRegistered" class="EmployerDetails">
   <label>You Name: {{employee._name}}</label>
-  <br/>
+  <br />
   <label>Your public key : {{employee._publicKey}}</label>
-  <br/>
+  <br />
   <label>Your Unique Id : {{employee._id}}</label>
-  <br/>
+  <br />
   <label>Your phone number : {{employee._phoneNumber}}</label>
-  <br/>
+  <br />
   <label>Your address : {{employee._address}}</label>
 </div>
-<br/>
+<br />
 
 <div *ngIf="isEmployeeRegistered" class="forms">
   <form [formGroup]="ExperienceForm" (ngSubmit)="addExperienceDetails()">
     <div class="addExperience">
       <!--      WorkEx Details-->
-      <br/><br/><br/>
+      <br /><br /><br />
       <label for="employeeCompanyId">Id given by the employer</label>
       <input id="employeeCompanyId" type="text" formControlName="EmployeeCompanyId">
-      <br/>
+      <br />
       <label for="projectTitle">Project Title</label>
       <input id="projectTitle" type="text" formControlName="ProjectTitle">
-      <br/>
+      <br />
       <label for="designation">Designation</label>
       <input id="designation" type="text" formControlName="Designation">
-      <br/>
+      <br />
       <label for="salary">Salary</label>
       <input id="salary" type="number" formControlName="Salary">
-      <br/>
+      <br />
       <label for="startDate">Start Date</label>
       <input id="startDate" type="date" formControlName="StartDate">
-      <br/>
+      <br />
       <label for="endDate">End Date</label>
       <input id="endDate" type="date" formControlName="EndDate">
-      <br/>
+      <br />
       <label for="employerPublicKey">Employer Public Key</label>
       <input id="employerPublicKey" type="text" formControlName="EmployerPublicKey">
-      <br/>
+      <br />
       <label for="employeeComments">Comments</label>
       <input id="employeeComments" type="text" formControlName="EmployeeComments">
-      <br/>
+      <br />
       <button class="button" type="submit">Save</button>
     </div>
   </form>

@@ -31,6 +31,10 @@ interface Experience {
   _employeeComments: string;
 }
 
+enum ConfirmDialogType {
+  EMPLOYEE,
+  EMPLOYER,
+}
 @Component({
   selector: 'app-employer',
   templateUrl: './employer.component.html',
@@ -117,7 +121,10 @@ export class EmployerComponent implements OnInit {
   openDialog() {
     console.log('hello', this.EmployerForm);
     this.extractEmployerDetails();
-    this.dialogService.confirmDialog(this.newEmployer);
+    this.dialogService.confirmDialog(
+      this.newEmployer,
+      ConfirmDialogType.EMPLOYER
+    );
   }
 
   extractEmployerDetails() {

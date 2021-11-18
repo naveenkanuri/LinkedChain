@@ -2,13 +2,9 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmComponent } from '../dialogs/confirm/confirm.component';
 
-interface Employer {
-  _publicKey: string;
-  _id: number;
-  _name: string;
-  _address: string;
-  _url: string;
-  _phoneNumber: number;
+enum ConfirmDialogType {
+  EMPLOYEE,
+  EMPLOYER,
 }
 
 @Injectable({
@@ -17,9 +13,12 @@ interface Employer {
 export class DialogService {
   constructor(private dialog: MatDialog) {}
 
-  confirmDialog(employer: Employer) {
+  confirmDialog(data: any, confirmDialogType: ConfirmDialogType) {
     this.dialog.open(ConfirmComponent, {
-      data: employer,
+      data: {
+        _data: data,
+        _confirmDialogType: confirmDialogType,
+      },
     });
   }
 }

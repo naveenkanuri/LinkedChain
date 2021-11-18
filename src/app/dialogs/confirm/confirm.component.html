@@ -1,29 +1,61 @@
 <div class="header">
     <h2 mat-dialog-title>Confirm your details before submission</h2>
 
+    <div *ngIf="!displayDataType">
+        <mat-dialog-content>
+            Public Key : {{displayData._publicKey}}
+            <br>
+            Unique ID : {{displayData._id}}
+            <br>
+            Name : {{displayData._name}}
+            <br>
+            Address : {{displayData._address}}
+            <br>
+            Phone Number : {{displayData._phoneNumber}}
+            <br>
+            URL : {{displayData._url}}
 
-    <mat-dialog-content>
-        Public Key : {{data._publicKey}}
-        <br>
-        Unique ID : {{data._id}}
-        <br>
-        Name : {{data._name}}
-        <br>
-        Address : {{data._address}}
-        <br>
-        Phone Number : {{data._phoneNumber}}
-        <br>
-        URL : {{data._url}}
+            <!-- Put all the employer registration details here -->
+        </mat-dialog-content>
+        <div mat-dialog-actions [align]="'end'">
+            <button mat-raised-button [mat-dialog-close]="false">No</button>
+            <button mat-raised-button color='primary' [mat-dialog-close]="true" (click)="addEmployer()">Confirm and
+                Submit</button>
+        </div>
+    </div>
 
-        <!-- Put all the employer registration details here -->
-    </mat-dialog-content>
+    <div *ngIf="displayDataType">
+        <mat-dialog-content>
+            Name : {{displayData._name}}
+            <br>
+            SSN : {{displayData._id}}
+
+            <br>
+            Address : {{displayData._address}}
+
+            <br>
+            Phone Number : {{displayData._phoneNumber}}
 
 
-    <div mat-dialog-actions [align]="'end'">
+            <br>
+            Public Key : {{displayData._publicKey}}
+
+
+            <!-- Put all the employer registration details here -->
+        </mat-dialog-content>
+        <div mat-dialog-actions [align]="'end'">
+            <button mat-raised-button [mat-dialog-close]="false">No</button>
+            <button mat-raised-button color='primary' [mat-dialog-close]="true" (click)="addEmployee()">Confirm and
+                Submit</button>
+        </div>
+    </div>
+
+
+    <!-- <div mat-dialog-actions [align]="'end'">
         <button mat-raised-button [mat-dialog-close]="false">No</button>
         <button mat-raised-button color='primary' [mat-dialog-close]="true" (click)="addEmployer()">Confirm and
             Submit</button>
-    </div>
+    </div> -->
 
 
 </div>
