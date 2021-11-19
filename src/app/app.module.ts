@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,6 +33,7 @@ import { ConfirmComponent } from './dialogs/confirm/confirm.component';
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
