@@ -79,7 +79,7 @@
   <br />
   <ngb-accordion #acc="ngbAccordion">
     <ngb-panel id="toggle-1" title="Approved">
-      <ng-template ngbPanelContent>
+      <!-- <ng-template ngbPanelContent>
         <div *ngIf="isEmployerRegistered" style="margin:0 30px;">
           <h2 style="text-align: center;">Approved</h2>
           <table>
@@ -105,67 +105,229 @@
             </tr>
           </table>
         </div>
+      </ng-template> -->
+      <ng-template ngbPanelContent>
+        <table mat-table [dataSource]="approvedExperiences" class="mat-elevation-z8  ">
+
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="serialno">
+            <th mat-header-cell *matHeaderCellDef> Serial No. </th>
+            <td mat-cell *matCellDef="let element"> {{element._expId}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="_employeePublicKey">
+            <th mat-header-cell *matHeaderCellDef> Employee Public Key </th>
+            <td mat-cell *matCellDef="let element"> {{element._employeePublicKey}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="_employeeId">
+            <th mat-header-cell *matHeaderCellDef>Employee Id </th>
+            <td mat-cell *matCellDef="let element"> {{element._employeeId}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_projectTitle">
+            <th mat-header-cell *matHeaderCellDef>Designation </th>
+            <td mat-cell *matCellDef="let element"> {{element._projectTitle}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_designation">
+            <th mat-header-cell *matHeaderCellDef>Salary</th>
+            <td mat-cell *matCellDef="let element"> {{element._designation}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_salary">
+            <th mat-header-cell *matHeaderCellDef>Employee Id </th>
+            <td mat-cell *matCellDef="let element"> {{element._salary}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_startDate">
+            <th mat-header-cell *matHeaderCellDef>Start date </th>
+            <td mat-cell *matCellDef="let element"> {{element._startDate}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_endDate">
+            <th mat-header-cell *matHeaderCellDef>End Date </th>
+            <td mat-cell *matCellDef="let element"> {{element._endDate}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_employerPublicKey">
+            <th mat-header-cell *matHeaderCellDef>Employer Public Key </th>
+            <td mat-cell *matCellDef="let element"> {{element._employerPublicKey}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_status">
+            <th mat-header-cell *matHeaderCellDef>Status </th>
+            <td mat-cell *matCellDef="let element"> {{element._status}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_employerComments">
+            <th mat-header-cell *matHeaderCellDef>employer comments </th>
+            <td mat-cell *matCellDef="let element"> {{element._employerComments}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_employeeComments">
+            <th mat-header-cell *matHeaderCellDef>employee comments </th>
+            <td mat-cell *matCellDef="let element"> {{element._employerComments}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
       </ng-template>
     </ngb-panel>
     <ngb-panel id="toggle-2" title="Rejected">
       <ng-template ngbPanelContent>
-        <div *ngIf="isEmployerRegistered" style="margin:0 30px;">
-          <h2 style="text-align: center;">Rejected</h2>
-          <table>
-            <tr>
-              <th>S.no</th>
-              <th>Employee Public Key</th>
-              <th>Employee Id</th>
-              <th>Designation</th>
-              <th>Salary</th>
-              <th>Project Title</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-            </tr>
-            <tr *ngFor="let exp of rejectedExperiences; index as i">
-              <td>{{ i+1 }}</td>
-              <td>{{ exp._employeePublicKey }}</td>
-              <td>{{ exp._employeeId }}</td>
-              <td>{{ exp._designation }}</td>
-              <td>{{ exp._salary }}</td>
-              <td>{{ exp._projectTitle }}</td>
-              <td>{{ exp._startDate }}</td>
-              <td>{{ exp._endDate }}</td>
-            </tr>
-          </table>
-        </div>
+        <table mat-table [dataSource]="rejectedExperiences" class="mat-elevation-z8  ">
+
+          <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="serialno">
+            <th mat-header-cell *matHeaderCellDef> Serial No. </th>
+            <td mat-cell *matCellDef="let element"> {{element._expId}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="_employeePublicKey">
+            <th mat-header-cell *matHeaderCellDef> Employee Public Key </th>
+            <td mat-cell *matCellDef="let element"> {{element._employeePublicKey}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="_employeeId">
+            <th mat-header-cell *matHeaderCellDef>Employee Id </th>
+            <td mat-cell *matCellDef="let element"> {{element._employeeId}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_projectTitle">
+            <th mat-header-cell *matHeaderCellDef>Designation </th>
+            <td mat-cell *matCellDef="let element"> {{element._projectTitle}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_designation">
+            <th mat-header-cell *matHeaderCellDef>Salary</th>
+            <td mat-cell *matCellDef="let element"> {{element._designation}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_salary">
+            <th mat-header-cell *matHeaderCellDef>Employee Id </th>
+            <td mat-cell *matCellDef="let element"> {{element._salary}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_startDate">
+            <th mat-header-cell *matHeaderCellDef>Start date </th>
+            <td mat-cell *matCellDef="let element"> {{element._startDate}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_endDate">
+            <th mat-header-cell *matHeaderCellDef>End Date </th>
+            <td mat-cell *matCellDef="let element"> {{element._endDate}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_employerPublicKey">
+            <th mat-header-cell *matHeaderCellDef>Employer Public Key </th>
+            <td mat-cell *matCellDef="let element"> {{element._employerPublicKey}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_status">
+            <th mat-header-cell *matHeaderCellDef>Status </th>
+            <td mat-cell *matCellDef="let element"> {{element._status}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_employerComments">
+            <th mat-header-cell *matHeaderCellDef>employer comments </th>
+            <td mat-cell *matCellDef="let element"> {{element._employerComments}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_employeeComments">
+            <th mat-header-cell *matHeaderCellDef>employee comments </th>
+            <td mat-cell *matCellDef="let element"> {{element._employerComments}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
       </ng-template>
     </ngb-panel>
     <ngb-panel id="toggle-3" title="Pending">
       <ng-template ngbPanelContent>
-        <div *ngIf="isEmployerRegistered" style="margin:0 30px;">
-          <h2 style="text-align: center;">Pending</h2>
-          <table>
-            <tr>
-              <th>S.no</th>
-              <th>Employee Public Key</th>
-              <th>Employee Id</th>
-              <th>Designation</th>
-              <th>Salary</th>
-              <th>Project Title</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-            </tr>
-            <tr *ngFor="let exp of pendingExperiences; index as i">
-              <td>{{ i+1 }}</td>
-              <td>{{ exp._employeePublicKey }}</td>
-              <td>{{ exp._employeeId }}</td>
-              <td>{{ exp._designation }}</td>
-              <td>{{ exp._salary }}</td>
-              <td>{{ exp._projectTitle }}</td>
-              <td>{{ exp._startDate }}</td>
-              <td>{{ exp._endDate }}</td>
-              <input type="text" placeholder="Enter Comments" #input>
-              <button class="button" type="submit" (click)="approve(exp._expId, input.value)">Approve</button>
-              <button class="button" type="submit" (click)="reject(exp._expId, input.value)">Reject</button>
-            </tr>
-          </table>
-        </div>
+        <table mat-table [dataSource]="pendingExperiences" class="mat-elevation-z8  ">
+
+          <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="serialno">
+            <th mat-header-cell *matHeaderCellDef> Serial No. </th>
+            <td mat-cell *matCellDef="let element"> {{element._expId}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="_employeePublicKey">
+            <th mat-header-cell *matHeaderCellDef> Employee Public Key </th>
+            <td mat-cell *matCellDef="let element"> {{element._employeePublicKey}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="_employeeId">
+            <th mat-header-cell *matHeaderCellDef>Employee Id </th>
+            <td mat-cell *matCellDef="let element"> {{element._employeeId}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_projectTitle">
+            <th mat-header-cell *matHeaderCellDef>Designation </th>
+            <td mat-cell *matCellDef="let element"> {{element._projectTitle}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_designation">
+            <th mat-header-cell *matHeaderCellDef>Salary</th>
+            <td mat-cell *matCellDef="let element"> {{element._designation}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_salary">
+            <th mat-header-cell *matHeaderCellDef>Employee Id </th>
+            <td mat-cell *matCellDef="let element"> {{element._salary}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_startDate">
+            <th mat-header-cell *matHeaderCellDef>Start date </th>
+            <td mat-cell *matCellDef="let element"> {{element._startDate}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_endDate">
+            <th mat-header-cell *matHeaderCellDef>End Date </th>
+            <td mat-cell *matCellDef="let element"> {{element._endDate}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_employerPublicKey">
+            <th mat-header-cell *matHeaderCellDef>Employer Public Key </th>
+            <td mat-cell *matCellDef="let element"> {{element._employerPublicKey}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_status">
+            <th mat-header-cell *matHeaderCellDef>Status </th>
+            <td mat-cell *matCellDef="let element"> {{element._status}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_employerComments">
+            <th mat-header-cell *matHeaderCellDef>employer comments </th>
+            <td mat-cell *matCellDef="let element"> {{element._employerComments}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_employeeComments">
+            <th mat-header-cell *matHeaderCellDef>employee comments </th>
+            <td mat-cell *matCellDef="let element"> {{element._employerComments}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
       </ng-template>
     </ngb-panel>
   </ngb-accordion>

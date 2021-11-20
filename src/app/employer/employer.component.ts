@@ -41,6 +41,21 @@ enum ConfirmDialogType {
   styleUrls: ['./employer.component.css'],
 })
 export class EmployerComponent implements OnInit {
+  displayedColumns: string[] = [
+    'serialno',
+    '_employeePublicKey',
+    '_employerPublicKey',
+    '_employeeId',
+    '_designation',
+    '_salary',
+    '_projectTitle',
+    '_startDate',
+    '_endDate',
+    '_status',
+    '_employerComments',
+    '_employeeComments',
+  ];
+  public dataSource: Experience[];
   public EmployerForm: FormGroup;
   public signer: any = null;
   public isEmployerRegistered: boolean = false;
@@ -56,7 +71,23 @@ export class EmployerComponent implements OnInit {
   // @ts-ignore
   public allExperiences: Experience[] = [];
   // @ts-ignore
-  public pendingExperiences: Experience[] = [];
+  public pendingExperiences: Experience[] = [
+    // Testing
+    // {
+    //   _expId: 12323,
+    //   _employeePublicKey: '123213',
+    //   _employeeId: '123213213',
+    //   _projectTitle: 'kuchbhi',
+    //   _designation: 'some',
+    //   _salary: 123324324,
+    //   _startDate: 234324324,
+    //   _endDate: 234324324,
+    //   _employerPublicKey: '34324324324',
+    //   _status: 1,
+    //   _employerComments: '12323',
+    //   _employeeComments: '12321321S',
+    // },
+  ];
   // @ts-ignore
   public approvedExperiences: Experience[] = [];
   // @ts-ignore
@@ -65,6 +96,8 @@ export class EmployerComponent implements OnInit {
   public signerAddress: any;
 
   constructor(private dialogService: DialogService) {
+    this.dataSource = [];
+
     this.EmployerForm = new FormGroup({
       EmployerPublicKey: new FormControl(),
       EmployerUniqueId: new FormControl(),

@@ -14,18 +14,22 @@ export interface PeriodicElement {
   symbol: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
+// const ELEMENT_DATA: Experience[] = [
+//   {
+//     _expId: 1234,
+//     _employeePublicKey: 'string',
+//     _employeeId: 'string',
+//     _projectTitle: 'string',
+//     _designation: 'string',
+//     _salary: 1234,
+//     _startDate: 1234,
+//     _endDate: 1234,
+//     _employerPublicKey: 'string',
+//     _status: 1234,
+//     _employerComments: 'string',
+//     _employeeComments: 'string',
+//   },
+// ];
 
 interface Employee {
   _publicKey: string;
@@ -61,8 +65,21 @@ enum ConfirmDialogType {
   styleUrls: ['./employee.component.css'],
 })
 export class EmployeeComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = [
+    '_expId',
+    '_employeePublicKey',
+    '_employeeId',
+    '_projectTitle',
+    '_designation',
+    '_salary',
+    '_startDate',
+    '_endDate',
+    '_employerPublicKey',
+    '_status',
+    '_employerComments',
+    '_employeeComments',
+  ];
+  public dataSource: Experience[];
   public EmployeeForm: FormGroup;
   public ExperienceForm: FormGroup;
 
@@ -84,6 +101,7 @@ export class EmployeeComponent implements OnInit {
   public signerAddress: any;
 
   constructor(private dialogService: DialogService) {
+    this.dataSource = [];
     this.EmployeeForm = new FormGroup({
       EmployeePublicKey: new FormControl(),
       EmployeeName: new FormControl(),
@@ -140,6 +158,7 @@ export class EmployeeComponent implements OnInit {
         await this.workExContract.getExperienceDetailsForEmployee(
           this.signerAddress
         );
+      this.dataSource = this.allExperiences;
     }
   }
 
