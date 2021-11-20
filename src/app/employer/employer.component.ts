@@ -111,6 +111,10 @@ export class EmployerComponent implements OnInit {
   async ngOnInit() {
     const provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
 
+    window.ethereum.on('accountsChanged', function(accounts: any) {
+      window.location.reload();
+    });
+
     provider.on('network', (newNetwork: any, oldNetwork: any) => {
       if (oldNetwork) {
         window.location.reload();
