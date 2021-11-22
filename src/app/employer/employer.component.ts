@@ -1,11 +1,13 @@
 declare let window: any;
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ethers } from 'ethers';
 import address from '../../../environment/contract-address.json';
 import WorkEx from '../../../blockchain/artifacts/blockchain/contracts/WorkEx.sol/WorkEx.json';
 import { DialogService } from '../services/dialog.service';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 interface Employer {
   _publicKey: string;
@@ -42,7 +44,7 @@ enum ConfirmDialogType {
 })
 export class EmployerComponent implements OnInit {
   displayedColumns: string[] = [
-    'serialno',
+    '_expId',
     '_employeePublicKey',
     '_employerPublicKey',
     '_employeeId',
@@ -95,6 +97,18 @@ export class EmployerComponent implements OnInit {
 
   public signerAddress: any;
 
+  public pendingExperiencesDataSource = new MatTableDataSource<Experience>();
+  public approvedExperiencesDataSource = new MatTableDataSource<Experience>();
+  public rejectedExperiencesDataSource = new MatTableDataSource<Experience>();
+
+  public sort!: MatSort;
+
+  @ViewChild(MatSort) set matSort(sort: MatSort) {
+    this.pendingExperiencesDataSource.sort = sort;
+    this.approvedExperiencesDataSource.sort = sort;
+    this.rejectedExperiencesDataSource.sort = sort;
+  }
+
   constructor(private dialogService: DialogService) {
     this.dataSource = [];
 
@@ -106,6 +120,18 @@ export class EmployerComponent implements OnInit {
       EmployerPhone: new FormControl(),
       EmployerURL: new FormControl(),
     });
+  }
+
+  setDataSources(pendingExperiences: Experience[], approvedExperiences: Experience[], rejectExperiences: Experience[]): void{
+  
+    this.pendingExperiencesDataSource.data = this.pendingExperiences;
+    this.pendingExperiencesDataSource.sort = this.sort;
+  
+    this.approvedExperiencesDataSource.data = this.approvedExperiences;
+    this.approvedExperiencesDataSource.sort = this.sort;
+
+    this.rejectedExperiencesDataSource.data = this.rejectedExperiences;
+    this.rejectedExperiencesDataSource.sort = this.sort;
   }
 
   async ngOnInit() {
@@ -152,6 +178,8 @@ export class EmployerComponent implements OnInit {
         );
       console.log('all experiences = ' + this.allExperiences);
       this.categorizeExperiences(this.allExperiences);
+    
+      this.setDataSources(this.pendingExperiences, this.approvedExperiences, this.rejectedExperiences);
     }
   }
 

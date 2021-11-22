@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmComponent } from './dialogs/confirm/confirm.component';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ConfirmComponent } from './dialogs/confirm/confirm.component';
     MatButtonModule,
     MatToolbarModule,
     MatTableModule,
+    MatSortModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
