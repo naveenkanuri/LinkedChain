@@ -37,6 +37,13 @@ enum ConfirmDialogType {
   EMPLOYEE,
   EMPLOYER,
 }
+
+enum ExperienceType {
+  PENDING,
+  APPROVED,
+  REJECTED,
+}
+
 @Component({
   selector: 'app-employer',
   templateUrl: './employer.component.html',
@@ -103,6 +110,8 @@ export class EmployerComponent implements OnInit {
 
   public sort!: MatSort;
 
+  public experienceType = ExperienceType;
+
   @ViewChild(MatSort) set matSort(sort: MatSort) {
     this.pendingExperiencesDataSource.sort = sort;
     this.approvedExperiencesDataSource.sort = sort;
@@ -132,6 +141,18 @@ export class EmployerComponent implements OnInit {
 
     this.rejectedExperiencesDataSource.data = this.rejectedExperiences;
     this.rejectedExperiencesDataSource.sort = this.sort;
+  }
+
+  public filterData(filterDataEvent: Event, experienceType: ExperienceType) {
+    let filterDataValue = (<HTMLTextAreaElement>filterDataEvent.target).value;
+    
+    if (experienceType === ExperienceType.PENDING) {
+      this.pendingExperiencesDataSource.filter = filterDataValue.trim().toLocaleLowerCase();
+    } else if (experienceType === ExperienceType.APPROVED) {
+      this.approvedExperiencesDataSource.filter = filterDataValue.trim().toLocaleLowerCase();
+    } else if (experienceType === ExperienceType.REJECTED) {
+      this.rejectedExperiencesDataSource.filter = filterDataValue.trim().toLocaleLowerCase();
+    }
   }
 
   async ngOnInit() {

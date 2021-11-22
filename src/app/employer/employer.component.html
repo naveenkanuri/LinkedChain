@@ -106,6 +106,13 @@
         </div>
       </ng-template> -->
             <ng-template ngbPanelContent>
+
+                <div fxLayout fxLayoutAlign="center center">
+                    <mat-form-field fxFlex="60%">
+                        <input matInput type="text" (keyup)="filterData($event, experienceType.APPROVED)" placeholder="Filter Approved Experiences">
+                    </mat-form-field>
+                </div>
+
                 <table mat-table [dataSource]="approvedExperiencesDataSource" class="mat-elevation-z8" matSort>
 
                     <!--- Note that these columns can be defined in any order.
@@ -181,6 +188,13 @@
         </ngb-panel>
         <ngb-panel id="toggle-2" title="Rejected">
             <ng-template ngbPanelContent>
+
+                <div fxLayout fxLayoutAlign="center center">
+                    <mat-form-field fxFlex="60%">
+                        <input matInput type="text" (keyup)="filterData($event, experienceType.REJECTED)" placeholder="Filter Rejected Experiences">
+                    </mat-form-field>
+                </div>
+
                 <table mat-table [dataSource]="rejectedExperiencesDataSource" class="mat-elevation-z8" matSort>
 
                     <!--- Note that these columns can be defined in any order.
@@ -256,6 +270,13 @@
         </ngb-panel>
         <ngb-panel id="toggle-3" title="Pending">
             <ng-template ngbPanelContent>
+
+                <div fxLayout fxLayoutAlign="center center">
+                    <mat-form-field fxFlex="60%">
+                        <input matInput type="text" (keyup)="filterData($event, experienceType.PENDING)" placeholder="Filter Pending Experiences">
+                    </mat-form-field>
+                </div>
+
                 <table mat-table [dataSource]="pendingExperiencesDataSource" class="mat-elevation-z8" matSort>
 
                     <!--- Note that these columns can be defined in any order.
