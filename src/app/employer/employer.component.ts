@@ -1,11 +1,13 @@
 declare let window: any;
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ethers } from 'ethers';
 import address from '../../../environment/contract-address.json';
 import WorkEx from '../../../blockchain/artifacts/blockchain/contracts/WorkEx.sol/WorkEx.json';
 import { DialogService } from '../services/dialog.service';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 interface Employer {
   _publicKey: string;
@@ -34,6 +36,13 @@ enum ConfirmDialogType {
   EMPLOYEE,
   EMPLOYER,
 }
+
+enum ExperienceType {
+  PENDING,
+  APPROVED,
+  REJECTED,
+}
+
 @Component({
   selector: 'app-employer',
   templateUrl: './employer.component.html',
@@ -41,7 +50,7 @@ enum ConfirmDialogType {
 })
 export class EmployerComponent implements OnInit {
   displayedColumnsPending: string[] = [
-    'serialno',
+    '_expId',
     '_employeePublicKey',
     '_employeeId',
     '_designation',
@@ -55,7 +64,7 @@ export class EmployerComponent implements OnInit {
     'reject'
   ];
   displayedColumns: string[] = [
-    'serialno',
+    '_expId',
     '_employeePublicKey',
     '_employeeId',
     '_designation',
@@ -73,7 +82,7 @@ export class EmployerComponent implements OnInit {
 
   public comments: string = "";
 
-  public workExContract: any;
+  public workExContract!: ethers.Contract;
 
   // @ts-ignore
   public employer: Employer = {};
@@ -108,6 +117,20 @@ export class EmployerComponent implements OnInit {
 
   public signerAddress: any;
 
+  public pendingExperiencesDataSource = new MatTableDataSource<Experience>();
+  public approvedExperiencesDataSource = new MatTableDataSource<Experience>();
+  public rejectedExperiencesDataSource = new MatTableDataSource<Experience>();
+
+  public sort!: MatSort;
+
+  public experienceType = ExperienceType;
+
+  @ViewChild(MatSort) set matSort(sort: MatSort) {
+    this.pendingExperiencesDataSource.sort = sort;
+    this.approvedExperiencesDataSource.sort = sort;
+    this.rejectedExperiencesDataSource.sort = sort;
+  }
+
   constructor(private dialogService: DialogService) {
     this.dataSource = [];
 
@@ -119,6 +142,30 @@ export class EmployerComponent implements OnInit {
       EmployerPhone: new FormControl(),
       EmployerURL: new FormControl(),
     });
+  }
+
+  setDataSources(pendingExperiences: Experience[], approvedExperiences: Experience[], rejectExperiences: Experience[]): void{
+  
+    this.pendingExperiencesDataSource.data = this.pendingExperiences;
+    this.pendingExperiencesDataSource.sort = this.sort;
+  
+    this.approvedExperiencesDataSource.data = this.approvedExperiences;
+    this.approvedExperiencesDataSource.sort = this.sort;
+
+    this.rejectedExperiencesDataSource.data = this.rejectedExperiences;
+    this.rejectedExperiencesDataSource.sort = this.sort;
+  }
+
+  public filterData(filterDataEvent: Event, experienceType: ExperienceType) {
+    let filterDataValue = (<HTMLTextAreaElement>filterDataEvent.target).value;
+    
+    if (experienceType === ExperienceType.PENDING) {
+      this.pendingExperiencesDataSource.filter = filterDataValue.trim().toLocaleLowerCase();
+    } else if (experienceType === ExperienceType.APPROVED) {
+      this.approvedExperiencesDataSource.filter = filterDataValue.trim().toLocaleLowerCase();
+    } else if (experienceType === ExperienceType.REJECTED) {
+      this.rejectedExperiencesDataSource.filter = filterDataValue.trim().toLocaleLowerCase();
+    }
   }
 
   async ngOnInit() {
@@ -165,6 +212,8 @@ export class EmployerComponent implements OnInit {
         );
       console.log('all experiences = ' + this.allExperiences);
       this.categorizeExperiences(this.allExperiences);
+    
+      this.setDataSources(this.pendingExperiences, this.approvedExperiences, this.rejectedExperiences);
     }
   }
 
@@ -205,15 +254,17 @@ export class EmployerComponent implements OnInit {
     );
   }
 
-  async addEmployer() {
-    this.extractEmployerDetails();
-    const tx = await this.workExContract.addEmployerDetails(this.newEmployer);
-    await tx.wait();
+  // async addEmployer() {
+  //   this.extractEmployerDetails();
+  //   console.log("in employer " + JSON.stringify(this.newEmployer));
 
-    console.log('Added ' + this.newEmployer.toString());
+  //   const tx = await this.workExContract.addEmployerDetails(this.newEmployer);
+  //   await tx.wait();
 
-    // this.EmployerForm.reset();
-  }
+  //   console.log('Added ' + this.newEmployer.toString());
+
+  //   // this.EmployerForm.reset();
+  // }
 
   categorizeExperiences(experiences: Experience[]) {
     for (let exp of experiences) {
