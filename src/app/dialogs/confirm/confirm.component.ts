@@ -24,9 +24,25 @@ interface Employee {
   _phoneNumber: number;
 }
 
+interface Experience {
+  _expId: number;
+  _employeePublicKey: string;
+  _employeeId: string;
+  _projectTitle: string;
+  _designation: string;
+  _salary: number;
+  _startDate: string;
+  _endDate: string;
+  _employerPublicKey: string;
+  _status: number;
+  _employerComments: string;
+  _employeeComments: string;
+}
+
 enum ConfirmDialogType {
   EMPLOYEE,
   EMPLOYER,
+  EMPLOYEE_EXPERIENCE,
 }
 
 interface Data {
@@ -45,19 +61,24 @@ export class ConfirmComponent implements OnInit {
   public workExContract!: ethers.Contract;
 
   public displayData: any;
-  public displayDataType: boolean = false;
+  public displayDataType: ConfirmDialogType;
+  public displayDataTypes = ConfirmDialogType;
 
   public newEmployer!: Employer;
   public newEmployee!: Employee;
+  public newEmployeeExperience!: Experience;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: Data) {
     this.displayData = data._data;
+    this.displayDataType = data._confirmDialogType;
     if (data._confirmDialogType === ConfirmDialogType.EMPLOYEE) {
-      this.displayDataType = true;
       this.newEmployee = <Employee>data._data;
     } else if (data._confirmDialogType === ConfirmDialogType.EMPLOYER) {
       this.newEmployer = <Employer>data._data;
+    } else if (data._confirmDialogType === ConfirmDialogType.EMPLOYEE_EXPERIENCE) {
+      this.newEmployeeExperience = <Experience>data._data;
     }
+
   }
   
   async addEmployer() {
@@ -66,7 +87,7 @@ export class ConfirmComponent implements OnInit {
       const err1 = await tx.wait();
       console.log('DATA HAS BEEN ADDED::: ' + this.data.toString());
     } catch (err: any) {
-      console.log(err);
+    
     }
   }
 
@@ -76,14 +97,23 @@ export class ConfirmComponent implements OnInit {
       const err1 = await tx.wait();
       console.log('Added ' + this.data.toString());
     } catch (err: any) {
-      console.log(err);
+      
     }
   }
+
+  async addEmployeeExperience() {
+    try {
+      const tx = await this.workExContract.addExperience(this.newEmployeeExperience);
+      const err1 = await tx.wait();
+      console.log('Added ' + this.data.toString());
+    } catch (err: any) {
+    }
+  }
+
   async ngOnInit() {
     const provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
     this.signer = provider.getSigner();
     console.log('confirm ka signer = ' + (await this.signer.getAddress()));
-    console.log('on init');
     
     this.workExContract = new ethers.Contract(
       address.workExContract,

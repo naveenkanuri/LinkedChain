@@ -57,6 +57,7 @@ interface Experience {
 enum ConfirmDialogType {
   EMPLOYEE,
   EMPLOYER,
+  EMPLOYEE_EXPERIENCE,
 }
 
 @Component({
@@ -166,12 +167,20 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
-  openDialog() {
+  openDialogEmployeeRegistration() {
     console.log('hello', this.EmployeeForm);
     this.extractEmployeeDetails();
     this.dialogService.confirmDialog(
       this.newEmployee,
       ConfirmDialogType.EMPLOYEE
+    );
+  }
+
+  openDialogEmployeeExperience() {
+    this.extractEmployeeExperienceDetails();
+    this.dialogService.confirmDialog(
+      this.experience,
+      ConfirmDialogType.EMPLOYEE_EXPERIENCE
     );
   }
 
@@ -196,24 +205,10 @@ export class EmployeeComponent implements OnInit {
     console.log('this.newEmployee._id = ' + this.newEmployee._id);
   }
 
-  async addEmployee() {
-    this.extractEmployeeDetails();
-    // console.log('To be added employee details = ' + this.employee.toString());
+  extractEmployeeExperienceDetails() {
+      // workex
 
-    // console.log('difference = '+ (new Date(this.experience._endDate).getTime() - new Date(this.experience._startDate).getTime()));
-    const tx = await this.workExContract.addEmployeeDetails(this.newEmployee);
-
-    await tx.wait();
-
-    console.log('Added ' + this.employee.toString());
-
-    // this.EmployeeForm.reset();
-  }
-
-  async addExperienceDetails() {
-    // workex
-
-    this.experience._expId = 0;
+      this.experience._expId = 0;
     this.experience._status = 0;
     this.experience._employerComments = '';
     this.experience._employeePublicKey = this.signerAddress;
@@ -260,12 +255,25 @@ export class EmployeeComponent implements OnInit {
       alert('Start Date should be at least a month before End Date');
     }
 
-    let startDate = this.ExperienceForm.get('StartDate')?.value;
-    this.experience._startDate = new Date(startDate).toDateString()
-    console.log('this.experience._startDate' + this.experience._startDate);
+    this.experience._startDate = new Date(this.ExperienceForm.get('StartDate')?.value).toDateString();
+    this.experience._endDate = new Date(this.ExperienceForm.get('EndDate')?.value).toDateString();
+  }
 
-    let endDate = this.ExperienceForm.get('EndDate')?.value;
-    this.experience._endDate = new Date(endDate).toDateString();
+  async addEmployee() {
+    this.extractEmployeeDetails();
+    // console.log('To be added employee details = ' + this.employee.toString());
+
+    // console.log('difference = '+ (new Date(this.experience._endDate).getTime() - new Date(this.experience._startDate).getTime()));
+    const tx = await this.workExContract.addEmployeeDetails(this.newEmployee);
+
+    await tx.wait();
+
+    console.log('Added ' + this.employee.toString());
+
+    // this.EmployeeForm.reset();
+  }
+
+  async addExperienceDetails() {
 
     const tx = await this.workExContract.addExperience(this.experience);
 

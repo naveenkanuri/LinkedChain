@@ -80,7 +80,7 @@ export class EmployerComponent implements OnInit {
   public signer: any = null;
   public isEmployerRegistered: boolean = false;
 
-  public comments: string = "";
+  public comments: string[] = [];
 
   public workExContract!: ethers.Contract;
 
@@ -214,6 +214,11 @@ export class EmployerComponent implements OnInit {
       this.categorizeExperiences(this.allExperiences);
     
       this.setDataSources(this.pendingExperiences, this.approvedExperiences, this.rejectedExperiences);
+      
+      // initialize comments
+      for (let i = 0; i < this.pendingExperiences.length; i++) {
+        this.comments.push("");
+      }
     }
   }
 
@@ -278,13 +283,23 @@ export class EmployerComponent implements OnInit {
     }
   }
 
-  async approve(_expId: number) {
-    const tx = await this.workExContract.approveExperience(_expId, this.comments);
+  // async approve(_expId: number) {
+  //   const tx = await this.workExContract.approveExperience(_expId, this.comments);
+  //   tx.wait();
+  // }
+
+  async approve(_expId: number, commentIndex: number) {
+    const tx = await this.workExContract.approveExperience(_expId, this.comments[commentIndex]);
     tx.wait();
   }
 
-  async reject(_expId: number) {
-    const tx = await this.workExContract.rejectExperience(_expId, this.comments);
+  // async reject(_expId: number) {
+  //   const tx = await this.workExContract.rejectExperience(_expId, this.comments);
+  //   tx.wait();
+  // }
+
+  async reject(_expId: number, commentIndex: number) {
+    const tx = await this.workExContract.rejectExperience(_expId, this.comments[commentIndex]);
     tx.wait();
   }
 }

@@ -1,19 +1,14 @@
 <div class="header">
     <h2 mat-dialog-title>Confirm your details before submission</h2>
 
-    <div *ngIf="!displayDataType">
+    <div *ngIf="displayDataType===displayDataTypes.EMPLOYER">
         <mat-dialog-content>
-            Public Key : {{displayData._publicKey}}
-            <br>
-            Unique ID : {{displayData._id}}
-            <br>
-            Name : {{displayData._name}}
-            <br>
-            Address : {{displayData._address}}
-            <br>
-            Phone Number : {{displayData._phoneNumber}}
-            <br>
-            URL : {{displayData._url}}
+            Employer Public Key : {{displayData._publicKey}}
+            <br> Employer Unique ID : {{displayData._id}}
+            <br> Employer Name : {{displayData._name}}
+            <br> Employer Address : {{displayData._address}}
+            <br> Employer Phone Number : {{displayData._phoneNumber}}
+            <br> Employer URL : {{displayData._url}}
 
             <!-- Put all the employer registration details here -->
         </mat-dialog-content>
@@ -24,21 +19,18 @@
         </div>
     </div>
 
-    <div *ngIf="displayDataType">
+    <div *ngIf="displayDataType===displayDataTypes.EMPLOYEE">
         <mat-dialog-content>
-            Name : {{displayData._name}}
-            <br>
-            SSN : {{displayData._id}}
+            Employee Public Key : {{displayData._publicKey}}
+            <br> Employee SSN : {{displayData._id}}
 
-            <br>
-            Address : {{displayData._address}}
+            <br> Employee Name : {{displayData._name}}
 
-            <br>
-            Phone Number : {{displayData._phoneNumber}}
+            <br> Employee Address : {{displayData._address}}
+
+            <br> Employee Phone Number : {{displayData._phoneNumber}}
 
 
-            <br>
-            Public Key : {{displayData._publicKey}}
 
 
             <!-- Put all the employer registration details here -->
@@ -46,6 +38,26 @@
         <div mat-dialog-actions [align]="'end'">
             <button mat-raised-button [mat-dialog-close]="false">No</button>
             <button mat-raised-button color='primary' [mat-dialog-close]="true" (click)="addEmployee()">Confirm and
+                Submit</button>
+        </div>
+    </div>
+
+    <div *ngIf="displayDataType===displayDataTypes.EMPLOYEE_EXPERIENCE">
+        <mat-dialog-content>
+            Experience ID : {{displayData._employeeId}}
+            <br> Experience Project Title : {{displayData._projectTitle}}
+            <br> Experience Designation : {{displayData._designation}}
+            <br> Experience Salary : {{displayData._salary}}
+            <br> Experience Start Date : {{displayData._startDate}}
+            <br> Experience End Date : {{displayData._endDate}}
+            <br> Employer Public Key : {{displayData._employerPublicKey}}
+            <br> Employee Comments : {{displayData._employeeComments}}
+
+            <!-- Put all the employer registration details here -->
+        </mat-dialog-content>
+        <div mat-dialog-actions [align]="'end'">
+            <button mat-raised-button [mat-dialog-close]="false">No</button>
+            <button mat-raised-button color='primary' [mat-dialog-close]="true" (click)="addEmployeeExperience()">Confirm and
                 Submit</button>
         </div>
     </div>

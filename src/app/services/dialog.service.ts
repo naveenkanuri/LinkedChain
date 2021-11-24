@@ -5,6 +5,7 @@ import { ConfirmComponent } from '../dialogs/confirm/confirm.component';
 enum ConfirmDialogType {
   EMPLOYEE,
   EMPLOYER,
+  EMPLOYEE_EXPERIENCE,
 }
 
 @Injectable({
