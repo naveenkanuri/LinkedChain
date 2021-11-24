@@ -2,3 +2,23 @@
     color:rgb(40,103,178)
 }
 
+.table {
+    width: 100%;
+  }
+
+.approve {
+    color: #1c7439;
+}
+
+.reject {
+    color: #b3461b;
+}
+
+mat-form-field {
+    margin-right: 12px;
+  }
+
+.all {
+    padding-left: 0.25%;
+    padding-right: 0.25%;
+}

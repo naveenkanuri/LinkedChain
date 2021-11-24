@@ -23,9 +23,8 @@ interface Experience {
   _projectTitle: string;
   _designation: string;
   _salary: number;
-  _startDate: number;
-  _endDate: number;
-  _employerPublicKey: string;
+  _startDate: string;
+  _endDate: string;
   _status: number;
   _employerComments: string;
   _employeeComments: string;
@@ -41,24 +40,38 @@ enum ConfirmDialogType {
   styleUrls: ['./employer.component.css'],
 })
 export class EmployerComponent implements OnInit {
-  displayedColumns: string[] = [
+  displayedColumnsPending: string[] = [
     'serialno',
     '_employeePublicKey',
-    '_employerPublicKey',
     '_employeeId',
     '_designation',
     '_salary',
     '_projectTitle',
     '_startDate',
     '_endDate',
-    '_status',
-    '_employerComments',
     '_employeeComments',
+    '_employerCommentsNew',
+    'approve',
+    'reject'
+  ];
+  displayedColumns: string[] = [
+    'serialno',
+    '_employeePublicKey',
+    '_employeeId',
+    '_designation',
+    '_salary',
+    '_projectTitle',
+    '_startDate',
+    '_endDate',
+    '_employerComments',
+    '_employeeComments'
   ];
   public dataSource: Experience[];
   public EmployerForm: FormGroup;
   public signer: any = null;
   public isEmployerRegistered: boolean = false;
+
+  public comments: string = "";
 
   public workExContract: any;
 
@@ -214,13 +227,13 @@ export class EmployerComponent implements OnInit {
     }
   }
 
-  async approve(_expId: number, comments: string) {
-    const tx = await this.workExContract.approveExperience(_expId, comments);
+  async approve(_expId: number) {
+    const tx = await this.workExContract.approveExperience(_expId, this.comments);
     tx.wait();
   }
 
-  async reject(_expId: number, comments: string) {
-    const tx = await this.workExContract.rejectExperience(_expId, comments);
+  async reject(_expId: number) {
+    const tx = await this.workExContract.rejectExperience(_expId, this.comments);
     tx.wait();
   }
 }

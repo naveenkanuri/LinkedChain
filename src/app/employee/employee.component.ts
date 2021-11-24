@@ -46,8 +46,8 @@ interface Experience {
   _projectTitle: string;
   _designation: string;
   _salary: number;
-  _startDate: number;
-  _endDate: number;
+  _startDate: string;
+  _endDate: string;
   _employerPublicKey: string;
   _status: number;
   _employerComments: string;
@@ -254,18 +254,18 @@ export class EmployeeComponent implements OnInit {
       'this.experience._employeeComments = ' + this.experience._employeeComments
     );
 
-    let startDate = this.ExperienceForm.get('StartDate')?.value;
-    this.experience._startDate = new Date(startDate).getTime();
-    console.log('this.experience._startDate' + this.experience._startDate);
-
-    let endDate = this.ExperienceForm.get('EndDate')?.value;
-    this.experience._endDate = new Date(endDate).getTime();
-
-    if (this.experience._endDate - this.experience._startDate < 259200) {
+    if (new Date(this.ExperienceForm.get('EndDate')?.value).getTime() - new Date(this.ExperienceForm.get('StartDate')?.value).getTime() < 259200) {
       // less than a month
       // console.log('difference = ' + (endDate - startDate));
       alert('Start Date should be at least a month before End Date');
     }
+
+    let startDate = this.ExperienceForm.get('StartDate')?.value;
+    this.experience._startDate = new Date(startDate).toDateString()
+    console.log('this.experience._startDate' + this.experience._startDate);
+
+    let endDate = this.ExperienceForm.get('EndDate')?.value;
+    this.experience._endDate = new Date(endDate).toDateString();
 
     const tx = await this.workExContract.addExperience(this.experience);
 

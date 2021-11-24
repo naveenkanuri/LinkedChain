@@ -30,8 +30,8 @@ contract WorkEx {
     string  _projectTitle;
     string  _designation;
     uint32  _salary;
-    uint256 _startDate;
-    uint256 _endDate;
+    string _startDate;
+    string _endDate;
     address _employerPublicKey;
     ExperienceStatus _status;
     string _employerComments;
