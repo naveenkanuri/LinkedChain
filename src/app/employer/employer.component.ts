@@ -69,7 +69,7 @@ export class EmployerComponent implements OnInit {
   public signer: any = null;
   public isEmployerRegistered: boolean = false;
 
-  public workExContract: any;
+  public workExContract!: ethers.Contract;
 
   // @ts-ignore
   public employer: Employer = {};
@@ -241,15 +241,17 @@ export class EmployerComponent implements OnInit {
     );
   }
 
-  async addEmployer() {
-    this.extractEmployerDetails();
-    const tx = await this.workExContract.addEmployerDetails(this.newEmployer);
-    await tx.wait();
+  // async addEmployer() {
+  //   this.extractEmployerDetails();
+  //   console.log("in employer " + JSON.stringify(this.newEmployer));
 
-    console.log('Added ' + this.newEmployer.toString());
+  //   const tx = await this.workExContract.addEmployerDetails(this.newEmployer);
+  //   await tx.wait();
 
-    // this.EmployerForm.reset();
-  }
+  //   console.log('Added ' + this.newEmployer.toString());
+
+  //   // this.EmployerForm.reset();
+  // }
 
   categorizeExperiences(experiences: Experience[]) {
     for (let exp of experiences) {
