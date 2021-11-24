@@ -68,7 +68,6 @@ enum ConfirmDialogType {
 export class EmployeeComponent implements OnInit {
   displayedColumns: string[] = [
     '_expId',
-    '_employeePublicKey',
     '_employeeId',
     '_projectTitle',
     '_designation',
