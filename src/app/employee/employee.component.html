@@ -120,14 +120,14 @@
     </form>
 
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table ">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table" matSort>
 
         <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
 
         <!-- Position Column -->
         <ng-container matColumnDef="_expId">
-            <th mat-header-cell *matHeaderCellDef> Serial No. </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Serial No. </th>
             <td mat-cell *matCellDef="let element"> {{element._expId}} </td>
         </ng-container>
 
@@ -141,52 +141,52 @@
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="_employeeId">
-            <th mat-header-cell *matHeaderCellDef>Employee ID </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee ID </th>
             <td mat-cell *matCellDef="let element" class="all"> {{element._employeeId}} </td>
         </ng-container>
         <ng-container matColumnDef="_projectTitle">
-            <th mat-header-cell *matHeaderCellDef>Project Title</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Project Title</th>
             <td mat-cell *matCellDef="let element" class="all"> {{element._projectTitle}} </td>
         </ng-container>
 
         <ng-container matColumnDef="_designation">
-            <th mat-header-cell *matHeaderCellDef>Designation</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Designation</th>
             <td mat-cell *matCellDef="let element" class="all"> {{element._designation}} </td>
         </ng-container>
 
         <ng-container matColumnDef="_salary">
-            <th mat-header-cell *matHeaderCellDef>Salary </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Salary </th>
             <td mat-cell *matCellDef="let element" class="all"> {{element._salary}} </td>
         </ng-container>
 
 
 
         <ng-container matColumnDef="_startDate">
-            <th mat-header-cell *matHeaderCellDef>Start date </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Start date </th>
             <td mat-cell *matCellDef="let element" class="all"> {{element._startDate}} </td>
         </ng-container>
 
         <ng-container matColumnDef="_endDate">
-            <th mat-header-cell *matHeaderCellDef>End Date </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date </th>
             <td mat-cell *matCellDef="let element" class="all"> {{element._endDate}} </td>
         </ng-container>
 
         <ng-container matColumnDef="_employerPublicKey">
-            <th mat-header-cell *matHeaderCellDef>Employer Public Key </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employer Public Key </th>
             <td mat-cell *matCellDef="let element" class="all"> {{element._employerPublicKey}} </td>
         </ng-container>
         <ng-container matColumnDef="_status">
-            <th mat-header-cell *matHeaderCellDef>Status </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
             <td mat-cell *matCellDef="let element" class="all"> {{element._status}} </td>
         </ng-container>
 
         <ng-container matColumnDef="_employerComments">
-            <th mat-header-cell *matHeaderCellDef>Employer Comments </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employer Comments </th>
             <td mat-cell *matCellDef="let element" class="all"> {{element._employerComments}} </td>
         </ng-container>
 
         <ng-container matColumnDef="_employeeComments">
-            <th mat-header-cell *matHeaderCellDef>Employee Comments </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Comments </th>
             <td mat-cell *matCellDef="let element" class="all"> {{element._employeeComments}} </td>
         </ng-container>
 

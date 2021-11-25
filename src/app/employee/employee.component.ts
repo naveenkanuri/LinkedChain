@@ -1,12 +1,13 @@
 declare let window: any;
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ethers } from 'ethers';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import address from '../../../environment/contract-address.json';
 import WorkEx from '../../../blockchain/artifacts/blockchain/contracts/WorkEx.sol/WorkEx.json';
 import { DialogService } from '../services/dialog.service';
 import { Router } from '@angular/router';
+import { MatSort } from '@angular/material/sort';
 
 export interface PeriodicElement {
   name: string;
@@ -89,7 +90,7 @@ export class EmployeeComponent implements OnInit {
     '_employerComments',
     '_employeeComments',
   ];
-  public dataSource: Experience[];
+  public dataSource!: MatTableDataSource<Experience>;
   public EmployeeForm: FormGroup;
   public ExperienceForm: FormGroup;
 
@@ -112,8 +113,10 @@ export class EmployeeComponent implements OnInit {
   public allExperiences: Experience[];
   public signerAddress: any;
 
+  @ViewChild(MatSort) sort!: MatSort;
+
   constructor(private dialogService: DialogService, private router: Router) {
-    this.dataSource = [];
+    this.dataSource = new MatTableDataSource();
     this.EmployeeForm = new FormGroup({
       EmployeePublicKey: new FormControl(),
       EmployeeName: new FormControl(),
@@ -174,7 +177,8 @@ export class EmployeeComponent implements OnInit {
         await this.workExContract.getExperienceDetailsForEmployee(
           this.signerAddress
         );
-      this.dataSource = this.allExperiences;
+      this.dataSource.data = this.allExperiences;
+      this.dataSource.sort = this.sort;
     }
 
     // as employee this is not registered, but it is registered as employer
