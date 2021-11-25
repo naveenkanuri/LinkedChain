@@ -119,6 +119,11 @@
         </div>
     </form>
 
+    <div fxLayout fxLayoutAlign="center center">
+        <mat-form-field fxFlex="60%">
+            <input matInput type="text" (keyup)="filterData($event)" placeholder="Filter Experiences">
+        </mat-form-field>
+    </div>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table" matSort>
 

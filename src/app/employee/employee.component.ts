@@ -301,4 +301,10 @@ export class EmployeeComponent implements OnInit {
 
     console.log('Added Exp: ' + this.experience.toString());
   }
+
+  public filterData(filterDataEvent: Event) {
+    let filterDataValue = (<HTMLTextAreaElement>filterDataEvent.target).value;
+
+    this.dataSource.filter = filterDataValue.trim().toLocaleLowerCase();
+  }
 }
