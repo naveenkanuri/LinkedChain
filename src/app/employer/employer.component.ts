@@ -8,6 +8,7 @@ import WorkEx from '../../../blockchain/artifacts/blockchain/contracts/WorkEx.so
 import { DialogService } from '../services/dialog.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 interface Employer {
   _publicKey: string;
@@ -30,6 +31,14 @@ interface Experience {
   _status: number;
   _employerComments: string;
   _employeeComments: string;
+}
+
+interface Employee {
+  _publicKey: string;
+  _name: string;
+  _id: number;
+  _address: string;
+  _phoneNumber: number;
 }
 
 enum ConfirmDialogType {
@@ -86,6 +95,8 @@ export class EmployerComponent implements OnInit {
 
   // @ts-ignore
   public employer: Employer = {};
+  // @ts-ignore
+  public employee: Employee = {};
 
   // @ts-ignore
   public newEmployer: Employer = {};
@@ -131,7 +142,7 @@ export class EmployerComponent implements OnInit {
     this.rejectedExperiencesDataSource.sort = sort;
   }
 
-  constructor(private dialogService: DialogService) {
+  constructor(private dialogService: DialogService, private router: Router) {
     this.dataSource = [];
 
     this.EmployerForm = new FormGroup({
@@ -197,19 +208,18 @@ export class EmployerComponent implements OnInit {
       'workExContract = ' + (await this.workExContract.resolvedAddress)
     );
     this.signerAddress = await this.signer.getAddress();
-    this.employer = await this.workExContract.getEmployerDetails(
-      this.signerAddress
-    );
+
+    this.employer = await this.workExContract.getEmployerDetails(this.signerAddress);
+    this.employee = await this.workExContract.getEmployeeDetails(this.signerAddress);
+    
     console.log(this.employer._publicKey);
     console.log(parseInt(String(this.employer._id), 10));
-    if (
-      this.employer._publicKey != '0x0000000000000000000000000000000000000000'
-    ) {
+
+    // employer already registered
+    if (this.employer._publicKey != '0x0000000000000000000000000000000000000000') {
       this.isEmployerRegistered = true;
-      this.allExperiences =
-        await this.workExContract.getExperienceDetailsForEmployer(
-          this.employer._publicKey
-        );
+      this.allExperiences = await 
+        this.workExContract.getExperienceDetailsForEmployer(this.employer._publicKey);
       console.log('all experiences = ' + this.allExperiences);
       this.categorizeExperiences(this.allExperiences);
     
@@ -219,6 +229,11 @@ export class EmployerComponent implements OnInit {
       for (let i = 0; i < this.pendingExperiences.length; i++) {
         this.comments.push("");
       }
+    }
+
+    // as employer this is not registered, but it is registered as employee
+    else if (this.employee._publicKey != '0x0000000000000000000000000000000000000000') {
+      this.router.navigate(['/employee']);
     }
   }
 

@@ -6,6 +6,7 @@ import { MatTableModule } from '@angular/material/table';
 import address from '../../../environment/contract-address.json';
 import WorkEx from '../../../blockchain/artifacts/blockchain/contracts/WorkEx.sol/WorkEx.json';
 import { DialogService } from '../services/dialog.service';
+import { Router } from '@angular/router';
 
 export interface PeriodicElement {
   name: string;
@@ -54,6 +55,15 @@ interface Experience {
   _employeeComments: string;
 }
 
+interface Employer {
+  _publicKey: string;
+  _id: number;
+  _name: string;
+  _address: string;
+  _url: string;
+  _phoneNumber: number;
+}
+
 enum ConfirmDialogType {
   EMPLOYEE,
   EMPLOYER,
@@ -90,6 +100,8 @@ export class EmployeeComponent implements OnInit {
   public isEmployeeRegistered: boolean = false;
   // @ts-ignore
   public employee: Employee = {};
+  // @ts-ignore
+  public employer: Employer = {};
 
   // @ts-ignore
   public newEmployee: Employee = {};
@@ -100,7 +112,7 @@ export class EmployeeComponent implements OnInit {
   public allExperiences: Experience[];
   public signerAddress: any;
 
-  constructor(private dialogService: DialogService) {
+  constructor(private dialogService: DialogService, private router: Router) {
     this.dataSource = [];
     this.EmployeeForm = new FormGroup({
       EmployeePublicKey: new FormControl(),
@@ -151,18 +163,23 @@ export class EmployeeComponent implements OnInit {
       'workExContract = ' + (await this.workExContract.resolvedAddress)
     );
     this.signerAddress = await this.signer.getAddress();
-    this.employee = await this.workExContract.getEmployeeDetails(
-      this.signerAddress
-    );
-    if (
-      this.employee._publicKey != '0x0000000000000000000000000000000000000000'
-    ) {
+    
+    this.employer = await this.workExContract.getEmployerDetails(this.signerAddress);
+    this.employee = await this.workExContract.getEmployeeDetails(this.signerAddress);
+    
+    // employee already registered
+    if (this.employee._publicKey != '0x0000000000000000000000000000000000000000') {
       this.isEmployeeRegistered = true;
       this.allExperiences =
         await this.workExContract.getExperienceDetailsForEmployee(
           this.signerAddress
         );
       this.dataSource = this.allExperiences;
+    }
+
+    // as employee this is not registered, but it is registered as employer
+    else if (this.employer._publicKey != '0x0000000000000000000000000000000000000000') {
+      this.router.navigate(['/employer']);
     }
   }
 
