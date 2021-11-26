@@ -31,6 +31,7 @@ interface Experience {
   _status: number;
   _employerComments: string;
   _employeeComments: string;
+  _employerPublicKey: string;
 }
 
 interface Employee {
@@ -50,6 +51,7 @@ enum ExperienceType {
   PENDING,
   APPROVED,
   REJECTED,
+  ALL_APPROVED,
 }
 
 @Component({
@@ -84,6 +86,14 @@ export class EmployerComponent implements OnInit {
     '_employerComments',
     '_employeeComments'
   ];
+  displayedColumnsAllApproved: string[] = [
+    '_expId',
+    '_employeePublicKey',
+    '_employerPublicKey',
+    '_designation',
+    '_startDate',
+    '_endDate',
+  ];
   public dataSource: Experience[];
   public EmployerForm: FormGroup;
   public signer: any = null;
@@ -102,45 +112,29 @@ export class EmployerComponent implements OnInit {
   public newEmployer: Employer = {};
 
   // @ts-ignore
-  public allExperiences: Experience[] = [];
+  public allExperiencesForEmployer: Experience[] = [];
   // @ts-ignore
-  public pendingExperiences: Experience[] = [
-    // Testing
-    // {
-    //   _expId: 12323,
-    //   _employeePublicKey: '123213',
-    //   _employeeId: '123213213',
-    //   _projectTitle: 'kuchbhi',
-    //   _designation: 'some',
-    //   _salary: 123324324,
-    //   _startDate: 234324324,
-    //   _endDate: 234324324,
-    //   _employerPublicKey: '34324324324',
-    //   _status: 1,
-    //   _employerComments: '12323',
-    //   _employeeComments: '12321321S',
-    // },
-  ];
+  public pendingExperiences: Experience[] = [];
   // @ts-ignore
   public approvedExperiences: Experience[] = [];
   // @ts-ignore
   public rejectedExperiences: Experience[] = [];
+  // @ts-ignore
+  public allExperiences: Experience[] = [];
 
   public signerAddress: any;
 
-  public pendingExperiencesDataSource = new MatTableDataSource<Experience>();
-  public approvedExperiencesDataSource = new MatTableDataSource<Experience>();
-  public rejectedExperiencesDataSource = new MatTableDataSource<Experience>();
-
-  public sort!: MatSort;
+  public pendingExperiencesDataSource!: MatTableDataSource<Experience>;
+  public approvedExperiencesDataSource!: MatTableDataSource<Experience>;
+  public rejectedExperiencesDataSource!: MatTableDataSource<Experience>;
+  public allExperiencesDataSource!: MatTableDataSource<Experience>;
 
   public experienceType = ExperienceType;
 
-  @ViewChild(MatSort) set matSort(sort: MatSort) {
-    this.pendingExperiencesDataSource.sort = sort;
-    this.approvedExperiencesDataSource.sort = sort;
-    this.rejectedExperiencesDataSource.sort = sort;
-  }
+  @ViewChild('pendingExperiencesSortFun') pendingExperiencesSortFun!: MatSort;
+  @ViewChild('approvedExperiencesSortFun') approvedExperiencesSortFun!: MatSort;
+  @ViewChild('rejectedExperiencesSortFun') rejectedExperiencesSortFun!: MatSort;
+  @ViewChild('allExperiencesSortFun') allExperiencesSortFun!: MatSort;
 
   constructor(private dialogService: DialogService, private router: Router) {
     this.dataSource = [];
@@ -155,16 +149,27 @@ export class EmployerComponent implements OnInit {
     });
   }
 
-  setDataSources(pendingExperiences: Experience[], approvedExperiences: Experience[], rejectExperiences: Experience[]): void{
+  setDataSources(): void{
   
-    this.pendingExperiencesDataSource.data = this.pendingExperiences;
-    this.pendingExperiencesDataSource.sort = this.sort;
-  
-    this.approvedExperiencesDataSource.data = this.approvedExperiences;
-    this.approvedExperiencesDataSource.sort = this.sort;
+    this.pendingExperiencesDataSource = new MatTableDataSource(this.pendingExperiences);
 
-    this.rejectedExperiencesDataSource.data = this.rejectedExperiences;
-    this.rejectedExperiencesDataSource.sort = this.sort;
+    this.approvedExperiencesDataSource = new MatTableDataSource(this.approvedExperiences);
+
+    this.rejectedExperiencesDataSource = new MatTableDataSource(this.rejectedExperiences);
+
+    this.allExperiencesDataSource = new MatTableDataSource(this.allExperiences);
+  }
+
+  setSort(): void {
+    setTimeout(() => {
+      this.pendingExperiencesDataSource.sort = this.pendingExperiencesSortFun;
+
+      this.approvedExperiencesDataSource.sort = this.approvedExperiencesSortFun;
+  
+      this.rejectedExperiencesDataSource.sort = this.rejectedExperiencesSortFun;
+  
+      this.allExperiencesDataSource.sort = this.allExperiencesSortFun;
+    }, 4000);
   }
 
   public filterData(filterDataEvent: Event, experienceType: ExperienceType) {
@@ -176,7 +181,21 @@ export class EmployerComponent implements OnInit {
       this.approvedExperiencesDataSource.filter = filterDataValue.trim().toLocaleLowerCase();
     } else if (experienceType === ExperienceType.REJECTED) {
       this.rejectedExperiencesDataSource.filter = filterDataValue.trim().toLocaleLowerCase();
+    } else if (experienceType == ExperienceType.ALL_APPROVED) {
+      this.allExperiencesDataSource.filter = filterDataValue.trim().toLocaleLowerCase();
     }
+  }
+
+  filterAllExperiences() {
+    let filteredAllExperiences = [];
+
+    for (let i = 0; i < this.allExperiences.length; i++) {
+      if (this.allExperiences[i]._status === 1) {
+        filteredAllExperiences.push(this.allExperiences[i]);
+      }
+    }
+
+    this.allExperiences = filteredAllExperiences;
   }
 
   async ngOnInit() {
@@ -218,13 +237,15 @@ export class EmployerComponent implements OnInit {
     // employer already registered
     if (this.employer._publicKey != '0x0000000000000000000000000000000000000000') {
       this.isEmployerRegistered = true;
-      this.allExperiences = await 
-        this.workExContract.getExperienceDetailsForEmployer(this.employer._publicKey);
-      console.log('all experiences = ' + this.allExperiences);
-      this.categorizeExperiences(this.allExperiences);
-    
-      this.setDataSources(this.pendingExperiences, this.approvedExperiences, this.rejectedExperiences);
-      
+      this.allExperiencesForEmployer = await this.workExContract.getExperienceDetailsForEmployer(this.employer._publicKey);
+      this.categorizeExperiences(this.allExperiencesForEmployer);
+
+      this.allExperiences = await this.workExContract.getAllExperiences(this.employer._publicKey);
+      this.filterAllExperiences();
+
+      this.setDataSources();
+      this.setSort();
+
       // initialize comments
       for (let i = 0; i < this.pendingExperiences.length; i++) {
         this.comments.push("");

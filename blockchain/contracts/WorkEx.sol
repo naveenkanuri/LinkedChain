@@ -133,4 +133,16 @@ contract WorkEx {
     }
     return employerExperiences;
   }
+
+  function getAllExperiences(address _employerPublicKey) public view returns(Exp[] memory) {
+    require(msg.sender == _employerPublicKey, "msg.sender should be the one asking for employer experiences");
+
+    Exp[] memory allExperiences = new Exp[](expCount);
+
+    for (uint256 i = 0; i < expCount; i++) {
+      allExperiences[i] = expArray[i];
+    }
+
+    return allExperiences;
+  }
 }
