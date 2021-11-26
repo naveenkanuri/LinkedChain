@@ -182,7 +182,7 @@
         </ng-container>
         <ng-container matColumnDef="_status">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
-            <td mat-cell *matCellDef="let element" class="all"> {{element._status}} </td>
+            <td mat-cell *matCellDef="let element" class="all"> {{element._status === 0 ? 'Pending' : (element._status === 1 ? 'Approved' : 'Rejected') }} </td>
         </ng-container>
 
         <ng-container matColumnDef="_employerComments">
