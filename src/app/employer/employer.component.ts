@@ -326,7 +326,8 @@ export class EmployerComponent implements OnInit {
 
   async approve(_expId: number, commentIndex: number) {
     const tx = await this.workExContract.approveExperience(_expId, this.comments[commentIndex]);
-    tx.wait();
+    const receipt = await tx.wait();
+    window.location.reload();
   }
 
   // async reject(_expId: number) {
@@ -336,7 +337,8 @@ export class EmployerComponent implements OnInit {
 
   async reject(_expId: number, commentIndex: number) {
     const tx = await this.workExContract.rejectExperience(_expId, this.comments[commentIndex]);
-    tx.wait();
+    const receipt = await tx.wait();
+    window.location.reload();
   }
 }
 

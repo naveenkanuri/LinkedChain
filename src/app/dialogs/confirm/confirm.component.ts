@@ -85,6 +85,7 @@ export class ConfirmComponent implements OnInit {
     try {
       const tx = await this.workExContract.addEmployerDetails(this.newEmployer);
       const err1 = await tx.wait();
+      window.location.reload();
       console.log('DATA HAS BEEN ADDED::: ' + this.data.toString());
     } catch (err: any) {
     
@@ -95,6 +96,7 @@ export class ConfirmComponent implements OnInit {
     try {
       const tx = await this.workExContract.addEmployeeDetails(this.newEmployee);
       const err1 = await tx.wait();
+      window.location.reload();
       console.log('Added ' + this.data.toString());
     } catch (err: any) {
       
@@ -105,6 +107,7 @@ export class ConfirmComponent implements OnInit {
     try {
       const tx = await this.workExContract.addExperience(this.newEmployeeExperience);
       const err1 = await tx.wait();
+      window.location.reload();
       console.log('Added ' + this.data.toString());
     } catch (err: any) {
     }
