@@ -46,9 +46,6 @@
                 <mat-error *ngIf="EmployerForm.get('EmployerName').hasError('required')">
                     Employer Name is Required!
                 </mat-error>
-                <mat-error *ngIf="EmployerForm.controls['EmployerName'].errors?.pattern">
-                    Employer Name must only have letters!
-                </mat-error>
             </mat-form-field>
             <br />
 

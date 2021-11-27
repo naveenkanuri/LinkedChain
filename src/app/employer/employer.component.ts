@@ -136,7 +136,6 @@ export class EmployerComponent implements OnInit {
   @ViewChild('rejectedExperiencesSortFun') rejectedExperiencesSortFun!: MatSort;
   @ViewChild('allExperiencesSortFun') allExperiencesSortFun!: MatSort;
   
-  charOnlyRegex = /^[a-zA-Z ]*$/;
   phoneRegex = /^\d{10}$/;
 
   constructor(private dialogService: DialogService, private router: Router) {
@@ -145,9 +144,7 @@ export class EmployerComponent implements OnInit {
     this.EmployerForm = new FormGroup({
       EmployerPublicKey: new FormControl(),
       EmployerUniqueId: new FormControl(),
-      EmployerName: new FormControl("", {
-        validators: [Validators.required, Validators.pattern(this.charOnlyRegex)]
-      }),
+      EmployerName: new FormControl(),
       EmployerAddress: new FormControl(),
       EmployerPhone: new FormControl("", {
         validators: [Validators.required, Validators.pattern(this.phoneRegex)]
