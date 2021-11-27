@@ -1,8 +1,8 @@
 declare let window: any;
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ethers } from 'ethers';
-import { FormControl, FormGroup } from '@angular/forms';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import address from '../../../environment/contract-address.json';
 import WorkEx from '../../../blockchain/artifacts/blockchain/contracts/WorkEx.sol/WorkEx.json';
 import { DialogService } from '../services/dialog.service';
@@ -113,16 +113,28 @@ export class EmployeeComponent implements OnInit {
   public allExperiences: Experience[];
   public signerAddress: any;
 
+  empIdRegex = /^\d{9}$/;
+  phoneRegex = /^\d{10}$/;
+  numOnlyRegex = /^[0-9]*$/;
+  charOnlyRegex = /^[a-zA-Z ]*$/;
+
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private dialogService: DialogService, private router: Router) {
     this.dataSource = new MatTableDataSource();
+    
     this.EmployeeForm = new FormGroup({
       EmployeePublicKey: new FormControl(),
-      EmployeeName: new FormControl(),
-      EmployeeId: new FormControl(),
+      EmployeeName: new FormControl("", {
+        validators: [Validators.required, Validators.pattern(this.charOnlyRegex)]
+      }),
+      EmployeeId: new FormControl("", {
+        validators: [Validators.required, Validators.pattern(this.empIdRegex)]
+      }),
       EmployeeAddress: new FormControl(),
-      EmployeePhone: new FormControl(),
+      EmployeePhone: new FormControl("", {
+        validators: [Validators.required, Validators.pattern(this.phoneRegex)]
+      })
     });
 
     this.ExperienceForm = new FormGroup({
@@ -130,7 +142,9 @@ export class EmployeeComponent implements OnInit {
       EmployeeCompanyId: new FormControl(),
       ProjectTitle: new FormControl(),
       Designation: new FormControl(),
-      Salary: new FormControl(),
+      Salary: new FormControl("", {
+        validators: [Validators.required, Validators.pattern(this.numOnlyRegex)]
+      }),
       StartDate: new FormControl(),
       EndDate: new FormControl(),
       EmployeeComments: new FormControl(),

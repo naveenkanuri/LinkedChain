@@ -1,7 +1,7 @@
 declare let window: any;
 
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ethers } from 'ethers';
 import address from '../../../environment/contract-address.json';
 import WorkEx from '../../../blockchain/artifacts/blockchain/contracts/WorkEx.sol/WorkEx.json';
@@ -135,6 +135,9 @@ export class EmployerComponent implements OnInit {
   @ViewChild('approvedExperiencesSortFun') approvedExperiencesSortFun!: MatSort;
   @ViewChild('rejectedExperiencesSortFun') rejectedExperiencesSortFun!: MatSort;
   @ViewChild('allExperiencesSortFun') allExperiencesSortFun!: MatSort;
+  
+  charOnlyRegex = /^[a-zA-Z ]*$/;
+  phoneRegex = /^\d{10}$/;
 
   constructor(private dialogService: DialogService, private router: Router) {
     this.dataSource = [];
@@ -142,9 +145,13 @@ export class EmployerComponent implements OnInit {
     this.EmployerForm = new FormGroup({
       EmployerPublicKey: new FormControl(),
       EmployerUniqueId: new FormControl(),
-      EmployerName: new FormControl(),
+      EmployerName: new FormControl("", {
+        validators: [Validators.required, Validators.pattern(this.charOnlyRegex)]
+      }),
       EmployerAddress: new FormControl(),
-      EmployerPhone: new FormControl(),
+      EmployerPhone: new FormControl("", {
+        validators: [Validators.required, Validators.pattern(this.phoneRegex)]
+      }),
       EmployerURL: new FormControl(),
     });
   }

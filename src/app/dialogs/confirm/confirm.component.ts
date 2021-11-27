@@ -83,6 +83,7 @@ export class ConfirmComponent implements OnInit {
   
   async addEmployer() {
     try {
+      alert("In addEmployer")
       const tx = await this.workExContract.addEmployerDetails(this.newEmployer);
       const err1 = await tx.wait();
       window.location.reload();

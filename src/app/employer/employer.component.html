@@ -17,27 +17,69 @@
     <form [formGroup]="EmployerForm" class="d-flex form-group justify-content-center align-items-center shadow">
         <div class=" justify-content-center">
             <!--      Employer Details-->
-            <label for="employerPublicKey" class="align-items-center">Employer Public Key</label>
-            <input id="employerPublicKey" type="text" formControlName="EmployerPublicKey" class="m-2">
+
             <br />
-            <label for="employerUniqueId">Employer Unique Id</label>
-            <input id="employerUniqueId" type="number" formControlName="EmployerUniqueId" class="m-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Employer Public Key</mat-label>
+                <input id="employerPublicKey" matInput formControlName="EmployerPublicKey" required minlength="42" maxlength="42">
+                <mat-error *ngIf="EmployerForm.get('EmployerPublicKey').hasError('required')">
+                    Employer Public Key is Required!
+                </mat-error>
+                <mat-error *ngIf="EmployerForm.get('EmployerPublicKey').hasError('minlength')">
+                    Employer Public Key must be 42 characters long!
+                </mat-error>
+            </mat-form-field>
             <br />
-            <label for="employerName">Employer Name</label>
-            <input id="employerName" type="text" formControlName="EmployerName" class="m-2">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Employer Unique Id</mat-label>
+                <input id="employerUniqueId" matInput formControlName="EmployerUniqueId" required>
+                <mat-error *ngIf="EmployerForm.get('EmployerUniqueId').hasError('required')">
+                    Employer Unique Id is Required!
+                </mat-error>
+            </mat-form-field>
             <br />
-            <label for="employerAddress">Employer Address</label>
-            <input id="employerAddress" type="text" formControlName="EmployerAddress" class="m-2">
+            
+            <mat-form-field appearance="fill">
+                <mat-label>Employer Name</mat-label>
+                <input id="employerName" matInput formControlName="EmployerName" required>
+                <mat-error *ngIf="EmployerForm.get('EmployerName').hasError('required')">
+                    Employer Name is Required!
+                </mat-error>
+                <mat-error *ngIf="EmployerForm.controls['EmployerName'].errors?.pattern">
+                    Employer Name must only have letters!
+                </mat-error>
+            </mat-form-field>
             <br />
-            <label for="employerPhone">Employer Phone Number</label>
-            <input id="employerPhone" type="number" formControlName="EmployerPhone" class="m-2">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Employer Address</mat-label>
+                <input id="employerAddress" matInput formControlName="EmployerAddress" required>
+                <mat-error *ngIf="EmployerForm.get('EmployerAddress').hasError('required')">
+                    Employer Address is Required!
+                </mat-error>
+            </mat-form-field>
             <br />
-            <label for="employerURL">Employer URL</label>
-            <input id="employerURL" type="text" formControlName="EmployerURL" class="m-2">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Employer Phone Number</mat-label>
+                <input id="employerPhone" matInput formControlName="EmployerPhone" required maxlength="10">
+                <mat-error *ngIf="EmployerForm.get('EmployerPhone').hasError('required')">
+                    Employer Phone Number is Required!
+                </mat-error>
+                <mat-error *ngIf="EmployerForm.controls['EmployerPhone'].errors?.pattern">
+                    Employer Phone must have 10 digits only!
+                </mat-error>
+            </mat-form-field>
             <br />
+            
+            <mat-form-field appearance="fill">
+                <mat-label>Employer URL</mat-label>
+                <input id="employerURL" matInput formControlName="EmployerURL">
+            </mat-form-field>
             <br />
             <div class="d-flex form-group justify-content-center align-items-center">
-                <button class="button rounded-pill btn btn-primary mb-2" mat-raised-button (click)="openDialog()">
+                <button class="button rounded-pill btn btn-primary mb-2" [disabled]="!EmployerForm.valid" mat-raised-button (click)="openDialog()">
           Submit
         </button>
 
