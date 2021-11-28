@@ -41,6 +41,15 @@ interface Employee {
   _phoneNumber: number;
 }
 
+interface SearchAllApprovedExperience {
+  _expId: string;
+  _employeePublicKey: string;
+  _employerPublicKey: string;
+  _designation: string;
+  _startDate: string;
+  _endDate: string;
+}
+
 enum ConfirmDialogType {
   EMPLOYEE,
   EMPLOYER,
@@ -119,14 +128,14 @@ export class EmployerComponent implements OnInit {
   // @ts-ignore
   public rejectedExperiences: Experience[] = [];
   // @ts-ignore
-  public allExperiences: Experience[] = [];
+  public allExperiences: any[] = [];
 
   public signerAddress: any;
 
   public pendingExperiencesDataSource!: MatTableDataSource<Experience>;
   public approvedExperiencesDataSource!: MatTableDataSource<Experience>;
   public rejectedExperiencesDataSource!: MatTableDataSource<Experience>;
-  public allExperiencesDataSource!: MatTableDataSource<Experience>;
+  public allExperiencesDataSource!: MatTableDataSource<SearchAllApprovedExperience>;
 
   public experienceType = ExperienceType;
 
@@ -206,7 +215,15 @@ export class EmployerComponent implements OnInit {
 
     for (let i = 0; i < this.allExperiences.length; i++) {
       if (this.allExperiences[i]._status === 1) {
-        filteredAllExperiences.push(this.allExperiences[i]);
+        let approvedExperience = <SearchAllApprovedExperience>{};
+        approvedExperience._expId = this.allExperiences[i]._expId;
+        approvedExperience._employeePublicKey = this.allExperiences[i]._employeePublicKey;
+        approvedExperience._employerPublicKey = this.allExperiences[i]._employerPublicKey;
+        approvedExperience._designation = this.allExperiences[i]._designation;
+        approvedExperience._startDate = this.allExperiences[i]._startDate;
+        approvedExperience._endDate = this.allExperiences[i]._endDate;
+
+        filteredAllExperiences.push(approvedExperience);
       }
     }
 
