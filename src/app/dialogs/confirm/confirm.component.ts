@@ -9,7 +9,6 @@ import address from 'environment/contract-address.json';
 import WorkEx from 'blockchain/artifacts/blockchain/contracts/WorkEx.sol/WorkEx.json';
 interface Employer {
   _publicKey: string;
-  _id: number;
   _name: string;
   _address: string;
   _url: string;
@@ -75,21 +74,20 @@ export class ConfirmComponent implements OnInit {
       this.newEmployee = <Employee>data._data;
     } else if (data._confirmDialogType === ConfirmDialogType.EMPLOYER) {
       this.newEmployer = <Employer>data._data;
-    } else if (data._confirmDialogType === ConfirmDialogType.EMPLOYEE_EXPERIENCE) {
+    } else if (
+      data._confirmDialogType === ConfirmDialogType.EMPLOYEE_EXPERIENCE
+    ) {
       this.newEmployeeExperience = <Experience>data._data;
     }
-
   }
-  
+
   async addEmployer() {
     try {
       const tx = await this.workExContract.addEmployerDetails(this.newEmployer);
       const err1 = await tx.wait();
       window.location.reload();
       console.log('DATA HAS BEEN ADDED::: ' + this.data.toString());
-    } catch (err: any) {
-    
-    }
+    } catch (err: any) {}
   }
 
   async addEmployee() {
@@ -98,33 +96,33 @@ export class ConfirmComponent implements OnInit {
       const err1 = await tx.wait();
       window.location.reload();
       console.log('Added ' + this.data.toString());
-    } catch (err: any) {
-      
-    }
+    } catch (err: any) {}
   }
 
   async addEmployeeExperience() {
     try {
-      const tx = await this.workExContract.addExperience(this.newEmployeeExperience);
+      const tx = await this.workExContract.addExperience(
+        this.newEmployeeExperience
+      );
       const err1 = await tx.wait();
       window.location.reload();
       console.log('Added ' + this.data.toString());
-    } catch (err: any) {
-    }
+    } catch (err: any) {}
   }
 
   async ngOnInit() {
     const provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
     this.signer = provider.getSigner();
     console.log('confirm ka signer = ' + (await this.signer.getAddress()));
-    
+
     this.workExContract = new ethers.Contract(
       address.workExContract,
       WorkEx.abi,
       this.signer
     );
     console.log(
-      'workExContract in confirm = ' + (await this.workExContract.resolvedAddress)
+      'workExContract in confirm = ' +
+        (await this.workExContract.resolvedAddress)
     );
   }
 }

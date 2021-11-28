@@ -29,7 +29,7 @@ contract WorkEx {
     string  _employeeId;
     string  _projectTitle;
     string  _designation;
-    uint32  _salary;
+    uint64  _salary;
     string _startDate;
     string _endDate;
     address _employerPublicKey;
@@ -40,11 +40,10 @@ contract WorkEx {
 
   struct Employer {
     address _publicKey;
-    uint256 _id; // unique
     string  _name;
     string  _address;
     string  _url;
-    uint32  _phoneNumber;
+    uint64  _phoneNumber;
   }
 
   struct Employee {
@@ -52,7 +51,7 @@ contract WorkEx {
     string  _name;
     uint256 _id; // unique
     string  _address;
-    uint32  _phoneNumber;
+    uint64  _phoneNumber;
   }
 
   event notifyEmployer(address _employer, Exp _experience);

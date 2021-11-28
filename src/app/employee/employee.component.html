@@ -31,11 +31,12 @@
                 <br />
                 <mat-form-field appearance="fill">
                     <mat-label>Employee Public Key</mat-label>
-                    <input id="employeePublicKey" matInput formControlName="EmployeePublicKey" required minlength="42" maxlength="42">
-                    <mat-error *ngIf="EmployeeForm.get('EmployeePublicKey').hasError('required')">
+                    <input id="employeePublicKey" matInput formControlName="EmployeePublicKey" required minlength="42"
+                        maxlength="42">
+                    <mat-error *ngIf="EmployeeForm.get('EmployeePublicKey')?.hasError('required')">
                         Employee Public Key is Required!
                     </mat-error>
-                    <mat-error *ngIf="EmployeeForm.get('EmployeePublicKey').hasError('minlength')">
+                    <mat-error *ngIf="EmployeeForm.get('EmployeePublicKey')?.hasError('minlength')">
                         Employee Public Key must be 42 characters long!
                     </mat-error>
                 </mat-form-field>
@@ -45,7 +46,7 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Employee SSN</mat-label>
                     <input id="employeeId" matInput formControlName="EmployeeId" required minlength="9" maxlength="9">
-                    <mat-error *ngIf="EmployeeForm.get('EmployeeId').hasError('required')">
+                    <mat-error *ngIf="EmployeeForm.get('EmployeeId')?.hasError('required')">
                         Employee SSN is Required!
                     </mat-error>
                     <mat-error *ngIf="EmployeeForm.controls['EmployeeId'].errors?.pattern">
@@ -58,7 +59,7 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Employee Name</mat-label>
                     <input id="employeeName" matInput formControlName="EmployeeName" required>
-                    <mat-error *ngIf="EmployeeForm.get('EmployeeName').hasError('required')">
+                    <mat-error *ngIf="EmployeeForm.get('EmployeeName')?.hasError('required')">
                         Employee Name is Required!
                     </mat-error>
                     <mat-error *ngIf="EmployeeForm.controls['EmployeeName'].errors?.pattern">
@@ -66,12 +67,12 @@
                     </mat-error>
                 </mat-form-field>
                 <br />
-                
+
                 <!-- <label for="employeeAddress">Employee Address</label> -->
                 <mat-form-field appearance="fill">
                     <mat-label>Employee Address</mat-label>
                     <input id="employeeAddress" matInput formControlName="EmployeeAddress" required>
-                    <mat-error *ngIf="EmployeeForm.get('EmployeeAddress').hasError('required')">
+                    <mat-error *ngIf="EmployeeForm.get('EmployeeAddress')?.hasError('required')">
                         Employee Address is Required!
                     </mat-error>
                 </mat-form-field>
@@ -81,7 +82,7 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Employee Phone</mat-label>
                     <input id="employeePhone" matInput formControlName="EmployeePhone" required maxlength="10">
-                    <mat-error *ngIf="EmployeeForm.get('EmployeePhone').hasError('required')">
+                    <mat-error *ngIf="EmployeeForm.get('EmployeePhone')?.hasError('required')">
                         Employee Phone is Required!
                     </mat-error>
                     <mat-error *ngIf="EmployeeForm.controls['EmployeePhone'].errors?.pattern">
@@ -91,9 +92,10 @@
                 <br />
 
                 <div class="d-flex form-group justify-content-center align-items-center">
-                    <button class="button rounded-pill btn btn-primary mb-2" [disabled]="!EmployeeForm.valid" mat-raised-button (click)="openDialogEmployeeRegistration()">
-            Submit
-          </button>
+                    <button class="button rounded-pill btn btn-primary mb-2" [disabled]="!EmployeeForm.valid"
+                        mat-raised-button (click)="openDialogEmployeeRegistration()">
+                        Submit
+                    </button>
 
                     <!-- <button class="button rounded-pill btn btn-primary mb-2" type="submit">Submit</button> -->
                 </div>
@@ -137,7 +139,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Employee Company ID</mat-label>
                 <input id="employeeCompanyId" matInput formControlName="EmployeeCompanyId" required>
-                <mat-error *ngIf="ExperienceForm.get('EmployeeCompanyId').hasError('required')">
+                <mat-error *ngIf="ExperienceForm.get('EmployeeCompanyId')?.hasError('required')">
                     Employee Company ID is Required!
                 </mat-error>
             </mat-form-field>
@@ -146,7 +148,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Project Title</mat-label>
                 <input id="projectTitle" matInput formControlName="ProjectTitle" required>
-                <mat-error *ngIf="ExperienceForm.get('ProjectTitle').hasError('required')">
+                <mat-error *ngIf="ExperienceForm.get('ProjectTitle')?.hasError('required')">
                     Project Title is Required!
                 </mat-error>
             </mat-form-field>
@@ -155,7 +157,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Designation</mat-label>
                 <input id="designation" matInput formControlName="Designation" required>
-                <mat-error *ngIf="ExperienceForm.get('Designation').hasError('required')">
+                <mat-error *ngIf="ExperienceForm.get('Designation')?.hasError('required')">
                     Designation is Required!
                 </mat-error>
             </mat-form-field>
@@ -164,7 +166,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Salary</mat-label>
                 <input id="salary" matInput formControlName="Salary" required>
-                <mat-error *ngIf="ExperienceForm.get('Salary').hasError('required')">
+                <mat-error *ngIf="ExperienceForm.get('Salary')?.hasError('required')">
                     Salary is Required!
                 </mat-error>
                 <mat-error *ngIf="ExperienceForm.controls['Salary'].errors?.pattern">
@@ -172,17 +174,17 @@
                 </mat-error>
             </mat-form-field>
             <br />
-           
+
             <mat-form-field appearance="fill">
                 <mat-label>Enter Start and End Dates</mat-label>
                 <mat-date-range-input [rangePicker]="picker" required>
-                  <input id="startDate" matStartDate placeholder="Start date" formControlName="StartDate" required>
-                  <input id="endDate" matEndDate placeholder="End date" formControlName="EndDate" required>
+                    <input id="startDate" matStartDate placeholder="Start date" formControlName="StartDate" required>
+                    <input id="endDate" matEndDate placeholder="End date" formControlName="EndDate" required>
                 </mat-date-range-input>
-                <mat-error *ngIf="ExperienceForm.get('StartDate').hasError('required')">
+                <mat-error *ngIf="ExperienceForm.get('StartDate')?.hasError('required')">
                     Start Date is Required!
                 </mat-error>
-                <mat-error *ngIf="ExperienceForm.get('EndDate').hasError('required')">
+                <mat-error *ngIf="ExperienceForm.get('EndDate')?.hasError('required')">
                     End Date is Required!
                 </mat-error>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -192,10 +194,10 @@
             <mat-form-field appearance="fill">
                 <mat-label>Employer Public Key</mat-label>
                 <input id="employerPublicKey" matInput formControlName="EmployerPublicKey" required minlength="42">
-                <mat-error *ngIf="ExperienceForm.get('EmployerPublicKey').hasError('required')">
+                <mat-error *ngIf="ExperienceForm.get('EmployerPublicKey')?.hasError('required')">
                     Employer Public Key is Required!
                 </mat-error>
-                <mat-error *ngIf="ExperienceForm.get('EmployerPublicKey').hasError('minlength')">
+                <mat-error *ngIf="ExperienceForm.get('EmployerPublicKey')?.hasError('minlength')">
                     Employee Public Key must be 42 characters long!
                 </mat-error>
             </mat-form-field>
@@ -205,13 +207,14 @@
                 <mat-label>Employee Comments</mat-label>
                 <input id="employeeComments" matInput formControlName="EmployeeComments">
             </mat-form-field>
-            
-            
+
+
             <br />
             <div class="d-flex form-group justify-content-center align-items-center">
-                <button class="button rounded-pill btn btn-primary mb-2 mt-2" mat-raised-button (click)="openDialogEmployeeExperience()">
-          Submit
-        </button>
+                <button class="button rounded-pill btn btn-primary mb-2 mt-2" mat-raised-button
+                    (click)="openDialogEmployeeExperience()">
+                    Submit
+                </button>
 
                 <!-- <button class="button rounded-pill btn btn-primary mb-2" type="submit">Submit</button> -->
             </div>
@@ -281,7 +284,8 @@
         </ng-container>
         <ng-container matColumnDef="_status">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
-            <td mat-cell *matCellDef="let element" class="all"> {{element._status === 0 ? 'Pending' : (element._status === 1 ? 'Approved' : 'Rejected') }} </td>
+            <td mat-cell *matCellDef="let element" class="all"> {{element._status === 0 ? 'Pending' : (element._status
+                === 1 ? 'Approved' : 'Rejected') }} </td>
         </ng-container>
 
         <ng-container matColumnDef="_employerComments">

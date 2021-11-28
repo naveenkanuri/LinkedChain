@@ -4,7 +4,6 @@
     <div *ngIf="displayDataType===displayDataTypes.EMPLOYER">
         <mat-dialog-content>
             Employer Public Key : {{displayData._publicKey}}
-            <br> Employer Unique ID : {{displayData._id}}
             <br> Employer Name : {{displayData._name}}
             <br> Employer Address : {{displayData._address}}
             <br> Employer Phone Number : {{displayData._phoneNumber}}
@@ -57,7 +56,8 @@
         </mat-dialog-content>
         <div mat-dialog-actions [align]="'end'">
             <button mat-raised-button [mat-dialog-close]="false">No</button>
-            <button mat-raised-button color='primary' [mat-dialog-close]="true" (click)="addEmployeeExperience()">Confirm and
+            <button mat-raised-button color='primary' [mat-dialog-close]="true"
+                (click)="addEmployeeExperience()">Confirm and
                 Submit</button>
         </div>
     </div>

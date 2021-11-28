@@ -58,7 +58,6 @@ interface Experience {
 
 interface Employer {
   _publicKey: string;
-  _id: number;
   _name: string;
   _address: string;
   _url: string;
@@ -122,19 +121,22 @@ export class EmployeeComponent implements OnInit {
 
   constructor(private dialogService: DialogService, private router: Router) {
     this.dataSource = new MatTableDataSource();
-    
+
     this.EmployeeForm = new FormGroup({
       EmployeePublicKey: new FormControl(),
-      EmployeeName: new FormControl("", {
-        validators: [Validators.required, Validators.pattern(this.charOnlyRegex)]
+      EmployeeName: new FormControl('', {
+        validators: [
+          Validators.required,
+          Validators.pattern(this.charOnlyRegex),
+        ],
       }),
-      EmployeeId: new FormControl("", {
-        validators: [Validators.required, Validators.pattern(this.empIdRegex)]
+      EmployeeId: new FormControl('', {
+        validators: [Validators.required, Validators.pattern(this.empIdRegex)],
       }),
       EmployeeAddress: new FormControl(),
-      EmployeePhone: new FormControl("", {
-        validators: [Validators.required, Validators.pattern(this.phoneRegex)]
-      })
+      EmployeePhone: new FormControl('', {
+        validators: [Validators.required, Validators.pattern(this.phoneRegex)],
+      }),
     });
 
     this.ExperienceForm = new FormGroup({
@@ -142,8 +144,11 @@ export class EmployeeComponent implements OnInit {
       EmployeeCompanyId: new FormControl(),
       ProjectTitle: new FormControl(),
       Designation: new FormControl(),
-      Salary: new FormControl("", {
-        validators: [Validators.required, Validators.pattern(this.numOnlyRegex)]
+      Salary: new FormControl('', {
+        validators: [
+          Validators.required,
+          Validators.pattern(this.numOnlyRegex),
+        ],
       }),
       StartDate: new FormControl(),
       EndDate: new FormControl(),
@@ -154,7 +159,7 @@ export class EmployeeComponent implements OnInit {
   async ngOnInit() {
     const provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
 
-    window.ethereum.on('accountsChanged', function(accounts: any) {
+    window.ethereum.on('accountsChanged', function (accounts: any) {
       window.location.reload();
     });
 
@@ -180,12 +185,18 @@ export class EmployeeComponent implements OnInit {
       'workExContract = ' + (await this.workExContract.resolvedAddress)
     );
     this.signerAddress = await this.signer.getAddress();
-    
-    this.employer = await this.workExContract.getEmployerDetails(this.signerAddress);
-    this.employee = await this.workExContract.getEmployeeDetails(this.signerAddress);
-    
+
+    this.employer = await this.workExContract.getEmployerDetails(
+      this.signerAddress
+    );
+    this.employee = await this.workExContract.getEmployeeDetails(
+      this.signerAddress
+    );
+
     // employee already registered
-    if (this.employee._publicKey != '0x0000000000000000000000000000000000000000') {
+    if (
+      this.employee._publicKey != '0x0000000000000000000000000000000000000000'
+    ) {
       this.isEmployeeRegistered = true;
       this.allExperiences =
         await this.workExContract.getExperienceDetailsForEmployee(
@@ -196,7 +207,9 @@ export class EmployeeComponent implements OnInit {
     }
 
     // as employee this is not registered, but it is registered as employer
-    else if (this.employer._publicKey != '0x0000000000000000000000000000000000000000') {
+    else if (
+      this.employer._publicKey != '0x0000000000000000000000000000000000000000'
+    ) {
       this.router.navigate(['/employer']);
     }
   }
@@ -240,9 +253,9 @@ export class EmployeeComponent implements OnInit {
   }
 
   extractEmployeeExperienceDetails() {
-      // workex
+    // workex
 
-      this.experience._expId = 0;
+    this.experience._expId = 0;
     this.experience._status = 0;
     this.experience._employerComments = '';
     this.experience._employeePublicKey = this.signerAddress;
@@ -283,14 +296,22 @@ export class EmployeeComponent implements OnInit {
       'this.experience._employeeComments = ' + this.experience._employeeComments
     );
 
-    if (new Date(this.ExperienceForm.get('EndDate')?.value).getTime() - new Date(this.ExperienceForm.get('StartDate')?.value).getTime() < 259200) {
+    if (
+      new Date(this.ExperienceForm.get('EndDate')?.value).getTime() -
+        new Date(this.ExperienceForm.get('StartDate')?.value).getTime() <
+      259200
+    ) {
       // less than a month
       // console.log('difference = ' + (endDate - startDate));
       alert('Start Date should be at least a month before End Date');
     }
 
-    this.experience._startDate = new Date(this.ExperienceForm.get('StartDate')?.value).toDateString();
-    this.experience._endDate = new Date(this.ExperienceForm.get('EndDate')?.value).toDateString();
+    this.experience._startDate = new Date(
+      this.ExperienceForm.get('StartDate')?.value
+    ).toDateString();
+    this.experience._endDate = new Date(
+      this.ExperienceForm.get('EndDate')?.value
+    ).toDateString();
   }
 
   async addEmployee() {
@@ -308,7 +329,6 @@ export class EmployeeComponent implements OnInit {
   }
 
   async addExperienceDetails() {
-
     const tx = await this.workExContract.addExperience(this.experience);
 
     await tx.wait();

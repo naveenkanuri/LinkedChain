@@ -21,29 +21,21 @@
             <br />
             <mat-form-field appearance="fill">
                 <mat-label>Employer Public Key</mat-label>
-                <input id="employerPublicKey" matInput formControlName="EmployerPublicKey" required minlength="42" maxlength="42">
-                <mat-error *ngIf="EmployerForm.get('EmployerPublicKey').hasError('required')">
+                <input id="employerPublicKey" matInput formControlName="EmployerPublicKey" required minlength="42"
+                    maxlength="42">
+                <mat-error *ngIf="EmployerForm.get('EmployerPublicKey')?.hasError('required')">
                     Employer Public Key is Required!
                 </mat-error>
-                <mat-error *ngIf="EmployerForm.get('EmployerPublicKey').hasError('minlength')">
+                <mat-error *ngIf="EmployerForm.get('EmployerPublicKey')?.hasError('minlength')">
                     Employer Public Key must be 42 characters long!
                 </mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field appearance="fill">
-                <mat-label>Employer Unique Id</mat-label>
-                <input id="employerUniqueId" matInput formControlName="EmployerUniqueId" required>
-                <mat-error *ngIf="EmployerForm.get('EmployerUniqueId').hasError('required')">
-                    Employer Unique Id is Required!
-                </mat-error>
-            </mat-form-field>
-            <br />
-            
-            <mat-form-field appearance="fill">
                 <mat-label>Employer Name</mat-label>
                 <input id="employerName" matInput formControlName="EmployerName" required>
-                <mat-error *ngIf="EmployerForm.get('EmployerName').hasError('required')">
+                <mat-error *ngIf="EmployerForm.get('EmployerName')?.hasError('required')">
                     Employer Name is Required!
                 </mat-error>
             </mat-form-field>
@@ -52,7 +44,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Employer Address</mat-label>
                 <input id="employerAddress" matInput formControlName="EmployerAddress" required>
-                <mat-error *ngIf="EmployerForm.get('EmployerAddress').hasError('required')">
+                <mat-error *ngIf="EmployerForm.get('EmployerAddress')?.hasError('required')">
                     Employer Address is Required!
                 </mat-error>
             </mat-form-field>
@@ -61,7 +53,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Employer Phone Number</mat-label>
                 <input id="employerPhone" matInput formControlName="EmployerPhone" required maxlength="10">
-                <mat-error *ngIf="EmployerForm.get('EmployerPhone').hasError('required')">
+                <mat-error *ngIf="EmployerForm.get('EmployerPhone')?.hasError('required')">
                     Employer Phone Number is Required!
                 </mat-error>
                 <mat-error *ngIf="EmployerForm.controls['EmployerPhone'].errors?.pattern">
@@ -69,16 +61,17 @@
                 </mat-error>
             </mat-form-field>
             <br />
-            
+
             <mat-form-field appearance="fill">
                 <mat-label>Employer URL</mat-label>
                 <input id="employerURL" matInput formControlName="EmployerURL">
             </mat-form-field>
             <br />
             <div class="d-flex form-group justify-content-center align-items-center">
-                <button class="button rounded-pill btn btn-primary mb-2" [disabled]="!EmployerForm.valid" mat-raised-button (click)="openDialog()">
-          Submit
-        </button>
+                <button class="button rounded-pill btn btn-primary mb-2" [disabled]="!EmployerForm.valid"
+                    mat-raised-button (click)="openDialog()">
+                    Submit
+                </button>
 
                 <!-- <button class="button rounded-pill btn btn-primary mb-2" type="submit">Submit</button> -->
             </div>
@@ -104,8 +97,6 @@
         <label>Welcome, {{employer._name}}</label>
         <br>
         <label>Your public key : {{employer._publicKey}}</label>
-        <br />
-        <label>Your unique Id : {{employer._id}}</label>
         <br />
         <label>Your address : {{employer._address}}</label>
         <br />
@@ -149,11 +140,13 @@
 
                 <div fxLayout fxLayoutAlign="center center">
                     <mat-form-field fxFlex="60%">
-                        <input matInput type="text" (keyup)="filterData($event, experienceType.APPROVED)" placeholder="Filter Approved Experiences">
+                        <input matInput type="text" (keyup)="filterData($event, experienceType.APPROVED)"
+                            placeholder="Filter Approved Experiences">
                     </mat-form-field>
                 </div>
 
-                <table mat-table #approvedExperiencesSortFun="matSort" [dataSource]="approvedExperiencesDataSource" class="mat-elevation-z8 table" matSort>
+                <table mat-table #approvedExperiencesSortFun="matSort" [dataSource]="approvedExperiencesDataSource"
+                    class="mat-elevation-z8 table" matSort>
 
                     <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
@@ -232,11 +225,13 @@
 
                 <div fxLayout fxLayoutAlign="center center">
                     <mat-form-field fxFlex="60%">
-                        <input matInput type="text" (keyup)="filterData($event, experienceType.REJECTED)" placeholder="Filter Rejected Experiences">
+                        <input matInput type="text" (keyup)="filterData($event, experienceType.REJECTED)"
+                            placeholder="Filter Rejected Experiences">
                     </mat-form-field>
                 </div>
 
-                <table mat-table #rejectedExperiencesSortFun="matSort" [dataSource]="rejectedExperiencesDataSource" class="mat-elevation-z8 table" matSort>
+                <table mat-table #rejectedExperiencesSortFun="matSort" [dataSource]="rejectedExperiencesDataSource"
+                    class="mat-elevation-z8 table" matSort>
 
                     <!--- Note that these columns can be defined in any order.
                       The actual rendered columns are set as a property on the row definition" -->
@@ -315,11 +310,13 @@
 
                 <div fxLayout fxLayoutAlign="center center">
                     <mat-form-field fxFlex="60%">
-                        <input matInput type="text" (keyup)="filterData($event, experienceType.PENDING)" placeholder="Filter Pending Experiences">
+                        <input matInput type="text" (keyup)="filterData($event, experienceType.PENDING)"
+                            placeholder="Filter Pending Experiences">
                     </mat-form-field>
                 </div>
 
-                <table #pendingExperiencesSortFun="matSort" mat-table [dataSource]="pendingExperiencesDataSource" class="mat-elevation-z8 table " matSort>
+                <table #pendingExperiencesSortFun="matSort" mat-table [dataSource]="pendingExperiencesDataSource"
+                    class="mat-elevation-z8 table " matSort>
 
                     <!--- Note that these columns can be defined in any order.
                     The actual rendered columns are set as a property on the row definition" -->
@@ -392,7 +389,8 @@
                     <ng-container matColumnDef="approve">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
                         <td mat-cell *matCellDef="let element; let i=index;">
-                            <button mat-raised-button class="approve" (click)="approve(element._expId, i)">Approve</button>
+                            <button mat-raised-button class="approve"
+                                (click)="approve(element._expId, i)">Approve</button>
                             <!-- (click)="approve(element._expId, input.value)" -->
                         </td>
                     </ng-container>
@@ -416,11 +414,13 @@
 
                 <div fxLayout fxLayoutAlign="center center">
                     <mat-form-field fxFlex="100%" [style.width.px]=200>
-                        <input matInput type="text" (keyup)="filterData($event, experienceType.ALL_APPROVED)" placeholder="Filter All Approved Experiences">
+                        <input matInput type="text" (keyup)="filterData($event, experienceType.ALL_APPROVED)"
+                            placeholder="Filter All Approved Experiences">
                     </mat-form-field>
                 </div>
 
-                <table mat-table #allExperiencesSortFun="matSort" [dataSource]="allExperiencesDataSource" class="mat-elevation-z8 table" matSort>
+                <table mat-table #allExperiencesSortFun="matSort" [dataSource]="allExperiencesDataSource"
+                    class="mat-elevation-z8 table" matSort>
                     <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
 

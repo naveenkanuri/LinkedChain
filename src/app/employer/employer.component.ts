@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 
 interface Employer {
   _publicKey: string;
-  _id: number;
   _name: string;
   _address: string;
   _url: string;
@@ -143,7 +142,6 @@ export class EmployerComponent implements OnInit {
 
     this.EmployerForm = new FormGroup({
       EmployerPublicKey: new FormControl(),
-      EmployerUniqueId: new FormControl(),
       EmployerName: new FormControl(),
       EmployerAddress: new FormControl(),
       EmployerPhone: new FormControl('', {
@@ -253,7 +251,6 @@ export class EmployerComponent implements OnInit {
     );
 
     console.log(this.employer._publicKey);
-    console.log(parseInt(String(this.employer._id), 10));
 
     // employer already registered
     if (
@@ -301,11 +298,6 @@ export class EmployerComponent implements OnInit {
     this.newEmployer._publicKey =
       this.EmployerForm.get('EmployerPublicKey')?.value;
     console.log('this.employer._publicKey = ' + this.newEmployer._publicKey);
-
-    this.newEmployer._id = Number(
-      this.EmployerForm.get('EmployerUniqueId')?.value
-    );
-    console.log('this.employer._id = ' + this.newEmployer._id);
 
     this.newEmployer._name = this.EmployerForm.get('EmployerName')?.value;
     console.log('this.employer._name = ' + this.newEmployer._name);
