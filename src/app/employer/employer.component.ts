@@ -72,7 +72,7 @@ export class EmployerComponent implements OnInit {
     '_employeeComments',
     '_employerCommentsNew',
     'approve',
-    'reject'
+    'reject',
   ];
   displayedColumns: string[] = [
     '_expId',
@@ -84,7 +84,7 @@ export class EmployerComponent implements OnInit {
     '_startDate',
     '_endDate',
     '_employerComments',
-    '_employeeComments'
+    '_employeeComments',
   ];
   displayedColumnsAllApproved: string[] = [
     '_expId',
@@ -135,7 +135,7 @@ export class EmployerComponent implements OnInit {
   @ViewChild('approvedExperiencesSortFun') approvedExperiencesSortFun!: MatSort;
   @ViewChild('rejectedExperiencesSortFun') rejectedExperiencesSortFun!: MatSort;
   @ViewChild('allExperiencesSortFun') allExperiencesSortFun!: MatSort;
-  
+
   phoneRegex = /^\d{10}$/;
 
   constructor(private dialogService: DialogService, private router: Router) {
@@ -146,20 +146,25 @@ export class EmployerComponent implements OnInit {
       EmployerUniqueId: new FormControl(),
       EmployerName: new FormControl(),
       EmployerAddress: new FormControl(),
-      EmployerPhone: new FormControl("", {
-        validators: [Validators.required, Validators.pattern(this.phoneRegex)]
+      EmployerPhone: new FormControl('', {
+        validators: [Validators.required, Validators.pattern(this.phoneRegex)],
       }),
       EmployerURL: new FormControl(),
     });
   }
 
-  setDataSources(): void{
-  
-    this.pendingExperiencesDataSource = new MatTableDataSource(this.pendingExperiences);
+  setDataSources(): void {
+    this.pendingExperiencesDataSource = new MatTableDataSource(
+      this.pendingExperiences
+    );
 
-    this.approvedExperiencesDataSource = new MatTableDataSource(this.approvedExperiences);
+    this.approvedExperiencesDataSource = new MatTableDataSource(
+      this.approvedExperiences
+    );
 
-    this.rejectedExperiencesDataSource = new MatTableDataSource(this.rejectedExperiences);
+    this.rejectedExperiencesDataSource = new MatTableDataSource(
+      this.rejectedExperiences
+    );
 
     this.allExperiencesDataSource = new MatTableDataSource(this.allExperiences);
   }
@@ -169,24 +174,32 @@ export class EmployerComponent implements OnInit {
       this.pendingExperiencesDataSource.sort = this.pendingExperiencesSortFun;
 
       this.approvedExperiencesDataSource.sort = this.approvedExperiencesSortFun;
-  
+
       this.rejectedExperiencesDataSource.sort = this.rejectedExperiencesSortFun;
-  
+
       this.allExperiencesDataSource.sort = this.allExperiencesSortFun;
     }, 4000);
   }
 
   public filterData(filterDataEvent: Event, experienceType: ExperienceType) {
     let filterDataValue = (<HTMLTextAreaElement>filterDataEvent.target).value;
-    
+
     if (experienceType === ExperienceType.PENDING) {
-      this.pendingExperiencesDataSource.filter = filterDataValue.trim().toLocaleLowerCase();
+      this.pendingExperiencesDataSource.filter = filterDataValue
+        .trim()
+        .toLocaleLowerCase();
     } else if (experienceType === ExperienceType.APPROVED) {
-      this.approvedExperiencesDataSource.filter = filterDataValue.trim().toLocaleLowerCase();
+      this.approvedExperiencesDataSource.filter = filterDataValue
+        .trim()
+        .toLocaleLowerCase();
     } else if (experienceType === ExperienceType.REJECTED) {
-      this.rejectedExperiencesDataSource.filter = filterDataValue.trim().toLocaleLowerCase();
+      this.rejectedExperiencesDataSource.filter = filterDataValue
+        .trim()
+        .toLocaleLowerCase();
     } else if (experienceType == ExperienceType.ALL_APPROVED) {
-      this.allExperiencesDataSource.filter = filterDataValue.trim().toLocaleLowerCase();
+      this.allExperiencesDataSource.filter = filterDataValue
+        .trim()
+        .toLocaleLowerCase();
     }
   }
 
@@ -205,7 +218,7 @@ export class EmployerComponent implements OnInit {
   async ngOnInit() {
     const provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
 
-    window.ethereum.on('accountsChanged', function(accounts: any) {
+    window.ethereum.on('accountsChanged', function (accounts: any) {
       window.location.reload();
     });
 
@@ -232,19 +245,30 @@ export class EmployerComponent implements OnInit {
     );
     this.signerAddress = await this.signer.getAddress();
 
-    this.employer = await this.workExContract.getEmployerDetails(this.signerAddress);
-    this.employee = await this.workExContract.getEmployeeDetails(this.signerAddress);
-    
+    this.employer = await this.workExContract.getEmployerDetails(
+      this.signerAddress
+    );
+    this.employee = await this.workExContract.getEmployeeDetails(
+      this.signerAddress
+    );
+
     console.log(this.employer._publicKey);
     console.log(parseInt(String(this.employer._id), 10));
 
     // employer already registered
-    if (this.employer._publicKey != '0x0000000000000000000000000000000000000000') {
+    if (
+      this.employer._publicKey != '0x0000000000000000000000000000000000000000'
+    ) {
       this.isEmployerRegistered = true;
-      this.allExperiencesForEmployer = await this.workExContract.getExperienceDetailsForEmployer(this.employer._publicKey);
+      this.allExperiencesForEmployer =
+        await this.workExContract.getExperienceDetailsForEmployer(
+          this.employer._publicKey
+        );
       this.categorizeExperiences(this.allExperiencesForEmployer);
 
-      this.allExperiences = await this.workExContract.getAllExperiences(this.employer._publicKey);
+      this.allExperiences = await this.workExContract.getAllExperiences(
+        this.employer._publicKey
+      );
       this.filterAllExperiences();
 
       this.setDataSources();
@@ -252,12 +276,14 @@ export class EmployerComponent implements OnInit {
 
       // initialize comments
       for (let i = 0; i < this.pendingExperiences.length; i++) {
-        this.comments.push("");
+        this.comments.push('');
       }
     }
 
     // as employer this is not registered, but it is registered as employee
-    else if (this.employee._publicKey != '0x0000000000000000000000000000000000000000') {
+    else if (
+      this.employee._publicKey != '0x0000000000000000000000000000000000000000'
+    ) {
       this.router.navigate(['/employee']);
     }
   }
@@ -276,7 +302,9 @@ export class EmployerComponent implements OnInit {
       this.EmployerForm.get('EmployerPublicKey')?.value;
     console.log('this.employer._publicKey = ' + this.newEmployer._publicKey);
 
-    this.newEmployer._id = this.EmployerForm.get('EmployerUniqueId')?.value;
+    this.newEmployer._id = Number(
+      this.EmployerForm.get('EmployerUniqueId')?.value
+    );
     console.log('this.employer._id = ' + this.newEmployer._id);
 
     this.newEmployer._name = this.EmployerForm.get('EmployerName')?.value;
@@ -285,8 +313,9 @@ export class EmployerComponent implements OnInit {
     this.newEmployer._address = this.EmployerForm.get('EmployerAddress')?.value;
     console.log('this.employer._address = ' + this.newEmployer._address);
 
-    this.newEmployer._phoneNumber =
-      this.EmployerForm.get('EmployerPhone')?.value;
+    this.newEmployer._phoneNumber = Number(
+      this.EmployerForm.get('EmployerPhone')?.value
+    );
     console.log(
       'this.employer._phoneNumber = ' + this.newEmployer._phoneNumber
     );
@@ -329,7 +358,10 @@ export class EmployerComponent implements OnInit {
   // }
 
   async approve(_expId: number, commentIndex: number) {
-    const tx = await this.workExContract.approveExperience(_expId, this.comments[commentIndex]);
+    const tx = await this.workExContract.approveExperience(
+      _expId,
+      this.comments[commentIndex]
+    );
     const receipt = await tx.wait();
     window.location.reload();
   }
@@ -340,7 +372,10 @@ export class EmployerComponent implements OnInit {
   // }
 
   async reject(_expId: number, commentIndex: number) {
-    const tx = await this.workExContract.rejectExperience(_expId, this.comments[commentIndex]);
+    const tx = await this.workExContract.rejectExperience(
+      _expId,
+      this.comments[commentIndex]
+    );
     const receipt = await tx.wait();
     window.location.reload();
   }
