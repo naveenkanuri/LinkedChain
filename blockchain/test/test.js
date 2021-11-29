@@ -20,7 +20,6 @@ describe("WorkEx App", ()=> {
     it("should add employer", async () => {
       const employer = {
         _publicKey: owner.address,
-        _id:1,
         _name:"employer1",
         _address:"moon",
         _url:"https://employer1.dummy",
@@ -32,7 +31,6 @@ describe("WorkEx App", ()=> {
       let ans = await workEx.getEmployerDetails(owner.address);
       // console.log(ans._id);
       expect(ans._publicKey).to.equal(owner.address);
-      expect(ans._id).to.equal(employer._id);
       expect(ans._name).to.equal(employer._name);
       expect(ans._address).to.equal(employer._address);
       expect(ans._url).to.equal(employer._url);
@@ -74,8 +72,8 @@ describe("WorkEx App", ()=> {
         _projectTitle:"workEx",
         _designation:"CEO",
         _salary:90909,
-        _startDate:0,
-        _endDate:90009000,
+        _startDate:"0",
+        _endDate:"90009000",
         _status: 2,
         _employerPublicKey:"0x2F72317616Fb4F4B716F68dB18EDBB0656e6816f",
         _employerComments: "",
