@@ -29,9 +29,9 @@ contract WorkEx {
     string  _employeeId;
     string  _projectTitle;
     string  _designation;
-    uint32  _salary;
-    uint256 _startDate;
-    uint256 _endDate;
+    uint64  _salary;
+    string _startDate;
+    string _endDate;
     address _employerPublicKey;
     ExperienceStatus _status;
     string _employerComments;
@@ -40,11 +40,10 @@ contract WorkEx {
 
   struct Employer {
     address _publicKey;
-    uint256 _id; // unique
     string  _name;
     string  _address;
     string  _url;
-    uint32  _phoneNumber;
+    uint64  _phoneNumber;
   }
 
   struct Employee {
@@ -52,7 +51,7 @@ contract WorkEx {
     string  _name;
     uint256 _id; // unique
     string  _address;
-    uint32  _phoneNumber;
+    uint64  _phoneNumber;
   }
 
   event notifyEmployer(address _employer, Exp _experience);
@@ -132,5 +131,17 @@ contract WorkEx {
       employerExperiences[i] = expArray[employerExperienceIds[i]];
     }
     return employerExperiences;
+  }
+
+  function getAllExperiences(address _employerPublicKey) public view returns(Exp[] memory) {
+    require(msg.sender == _employerPublicKey, "msg.sender should be the one asking for employer experiences");
+
+    Exp[] memory allExperiences = new Exp[](expCount);
+
+    for (uint256 i = 0; i < expCount; i++) {
+      allExperiences[i] = expArray[i];
+    }
+
+    return allExperiences;
   }
 }

@@ -1,4 +1,4 @@
-# WorkExValidator
+# LinkedChain
 
 This project was developed as a part of the course ECS 265, Distributed Database Systems taught by
 Prof. Mohammad Sadoghi in Fall 2021. Please visit [Expolab](https://expolab.org/) for more info.
@@ -7,7 +7,7 @@ Prof. Mohammad Sadoghi in Fall 2021. Please visit [Expolab](https://expolab.org/
 
 Our project attempts to ease hurdles faced by potential employers in
 verifying the work experience details given by an employee in his/her resume. We use blockchain to solve this problem.
-We present **WorkExValidator**, a decentralized application, where an employee can register and enter his/her work experience. 
+We present **LinkedChain**, a decentralized application, where an employee can register and enter his/her work experience. 
 This gets approved/rejected by their employer. All these transactions are stored on blockchain.
 A potential employer can verify an employee's work experience details using the employee's public key.
 
