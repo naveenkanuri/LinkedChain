@@ -1,0 +1,19 @@
+last three accounts to be used 
+Contract Creator
+Employer 1
+Employee 1
+
+Requirements: 
+
+1. Only when you click on submit the metamask plugin should open, right?
+2. When clicking on "confirm and submit", the transaction on metamask doesn't do "confirm". I think this is required to establish minimum interaction with metamask plugin.
+3. If we click on the submit button, irrespective of whether we do "no", "confirm or submit", or click outside, it leads to creation of batch of pending transactions. A user can confirm any of them which is bad. 
+4. After we submit a form for confirmation, we should put a delay of 5 seconds reload, and then refresh the page to show the records screen
+
+5. Need main headline for employee page like in the employer page
+6. Make form similar to employer page
+
+Employer 1 Public Key: 0xb7a3390636c6A839536af3efE5b8FC569698B949
+Employer 2 Public Key: 0xF7A13fb1919e7902208C0419b17bca7E952932A6
+Employer 3 Public Key: 0xeBeC3AF8188F07e0647cE99D690632E0bd22e5c1
+Employer Registration Public Key: 0xB562a2940DFC9BE61Bb522C201cB4b638a1Cf599

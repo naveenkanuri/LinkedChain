@@ -1,139 +1,485 @@
-<div class="header" color="">
-  Welcome to Employer Portal!
-</div>
-
-<div *ngIf="!this.signer" class="connect-button">
+<!-- <div *ngIf="!this.signer" class="connect-button ">
   <label>You have not connected!</label>
 </div>
 <div *ngIf="this.signer" class="connect-button">
   <label>You have connected!</label>
 </div>
-<br/>
+<br /> -->
 
-<div *ngIf="!isEmployerRegistered" class="forms">
-  <form [formGroup]="EmployerForm" (ngSubmit)="addEmployer()">
-    <div class="addEmployer">
-      <!--      Employer Details-->
-      <label for="employerPublicKey">Employer Public Key</label>
-      <input id="employerPublicKey" type="text" formControlName="EmployerPublicKey">
-      <br/>
-      <label for="employerUniqueId">Employer Unique Id</label>
-      <input id="employerUniqueId" type="number" formControlName="EmployerUniqueId">
-      <br/>
-      <label for="employerName">Employer Name</label>
-      <input id="employerName" type="text" formControlName="EmployerName">
-      <br/>
-      <label for="employerAddress">Employer Address</label>
-      <input id="employerAddress" type="text" formControlName="EmployerAddress">
-      <br/>
-      <label for="employerPhone">Employer Phone Number</label>
-      <input id="employerPhone" type="number" formControlName="EmployerPhone">
-      <br/>
-      <label for="employerURL">Employer URL</label>
-      <input id="employerURL" type="text" formControlName="EmployerURL">
-      <br/>
-      <br/>
+<div [hidden]="isEmployerRegistered" class="pt-4">
+    <div class="jumbotron jumbotron-fluid  text-center">
 
-      <button class="button" type="submit">Save</button>
+        <div class="container">
+            <h1 class="display-4">Employer Registration</h1>
+            <p class="lead">Please enter your details as a potential employer.</p>
+        </div>
     </div>
-  </form>
-</div>
-<br/>
-<div *ngIf="isEmployerRegistered" class="EmployerDetails">
-  <label>Welcome {{employer._name}}</label>
-  <br/>
-  <label>Your public key : {{employer._publicKey}}</label>
-  <br/>
-  <label>Your Unique Id : {{employer._id}}</label>
-  <br/>
-  <label>Your phone number : {{employer._phoneNumber}}</label>
-  <br/>
-  <label>Your address : {{employer._address}}</label>
-  <br/>
-  <label>Your url : {{employer._url}}</label>
-  <br/>
+    <form [formGroup]="EmployerForm" class="d-flex form-group justify-content-center align-items-center shadow">
+        <div class=" justify-content-center">
+            <!--      Employer Details-->
+
+            <br />
+            <mat-form-field appearance="fill">
+                <mat-label>Employer Public Key</mat-label>
+                <input id="employerPublicKey" matInput formControlName="EmployerPublicKey" required minlength="42"
+                    maxlength="42">
+                <mat-error *ngIf="EmployerForm.get('EmployerPublicKey')?.hasError('required')">
+                    Employer Public Key is Required!
+                </mat-error>
+                <mat-error *ngIf="EmployerForm.get('EmployerPublicKey')?.hasError('minlength')">
+                    Employer Public Key must be 42 characters long!
+                </mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field appearance="fill">
+                <mat-label>Employer Name</mat-label>
+                <input id="employerName" matInput formControlName="EmployerName" required>
+                <mat-error *ngIf="EmployerForm.get('EmployerName')?.hasError('required')">
+                    Employer Name is Required!
+                </mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field appearance="fill">
+                <mat-label>Employer Address</mat-label>
+                <input id="employerAddress" matInput formControlName="EmployerAddress" required>
+                <mat-error *ngIf="EmployerForm.get('EmployerAddress')?.hasError('required')">
+                    Employer Address is Required!
+                </mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field appearance="fill">
+                <mat-label>Employer Phone Number</mat-label>
+                <input id="employerPhone" matInput formControlName="EmployerPhone" required maxlength="10">
+                <mat-error *ngIf="EmployerForm.get('EmployerPhone')?.hasError('required')">
+                    Employer Phone Number is Required!
+                </mat-error>
+                <mat-error *ngIf="EmployerForm.controls['EmployerPhone'].errors?.pattern">
+                    Employer Phone must have 10 digits only!
+                </mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field appearance="fill">
+                <mat-label>Employer URL</mat-label>
+                <input id="employerURL" matInput formControlName="EmployerURL">
+            </mat-form-field>
+            <br />
+            <div class="d-flex form-group justify-content-center align-items-center">
+                <button class="button rounded-pill btn btn-primary mb-2" [disabled]="!EmployerForm.valid"
+                    mat-raised-button (click)="openDialog()">
+                    Submit
+                </button>
+
+                <!-- <button class="button rounded-pill btn btn-primary mb-2" type="submit">Submit</button> -->
+            </div>
+
+        </div>
+    </form>
+
+
 </div>
 
-<br/>
-<br/>
 
-<div *ngIf="isEmployerRegistered" style="margin:0 30px;">
-  <h2 style="text-align: center;">Approved</h2>
-  <table>
-    <tr>
-      <th>S.no</th>
-      <th>Employee Public Key</th>
-      <th>Employee Id</th>
-      <th>Designation</th>
-      <th>Salary</th>
-      <th>Project Title</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-    </tr>
-    <tr *ngFor="let exp of approvedExperiences; index as i">
-      <td>{{ i+1 }}</td>
-      <td>{{ exp._employeePublicKey }}</td>
-      <td>{{ exp._employeeId }}</td>
-      <td>{{ exp._designation }}</td>
-      <td>{{ exp._salary }}</td>
-      <td>{{ exp._projectTitle }}</td>
-      <td>{{ exp._startDate }}</td>
-      <td>{{ exp._endDate }}</td>
-    </tr>
-  </table>
-</div>
+<br />
+<div [hidden]="!isEmployerRegistered">
 
-<div *ngIf="isEmployerRegistered" style="margin:0 30px;">
-  <h2 style="text-align: center;">Rejected</h2>
-  <table>
-    <tr>
-      <th>S.no</th>
-      <th>Employee Public Key</th>
-      <th>Employee Id</th>
-      <th>Designation</th>
-      <th>Salary</th>
-      <th>Project Title</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-    </tr>
-    <tr *ngFor="let exp of rejectedExperiences; index as i">
-      <td>{{ i+1 }}</td>
-      <td>{{ exp._employeePublicKey }}</td>
-      <td>{{ exp._employeeId }}</td>
-      <td>{{ exp._designation }}</td>
-      <td>{{ exp._salary }}</td>
-      <td>{{ exp._projectTitle }}</td>
-      <td>{{ exp._startDate }}</td>
-      <td>{{ exp._endDate }}</td>
-    </tr>
-  </table>
-</div>
+    <div class="jumbotron jumbotron-fluid  text-center">
+        <div class="container">
+            <h1 class="display-4">Employer Profile</h1>
+            <p class="lead">Dashboard</p>
+        </div>
+    </div>
+    <div class="align-items-center shadow align-content-center p-4">
 
-<div *ngIf="isEmployerRegistered" style="margin:0 30px;">
-  <h2 style="text-align: center;">Pending</h2>
-  <table>
-    <tr>
-      <th>S.no</th>
-      <th>Employee Public Key</th>
-      <th>Employee Id</th>
-      <th>Designation</th>
-      <th>Salary</th>
-      <th>Project Title</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-    </tr>
-    <tr *ngFor="let exp of pendingExperiences; index as i">
-      <td>{{ i+1 }}</td>
-      <td>{{ exp._employeePublicKey }}</td>
-      <td>{{ exp._employeeId }}</td>
-      <td>{{ exp._designation }}</td>
-      <td>{{ exp._salary }}</td>
-      <td>{{ exp._projectTitle }}</td>
-      <td>{{ exp._startDate }}</td>
-      <td>{{ exp._endDate }}</td>
-      <input type="text" placeholder="Enter Comments" #input>
-      <button class="button" type="submit" (click)="approve(exp._expId, input.value)">Approve</button>
-      <button class="button" type="submit" (click)="reject(exp._expId, input.value)">Reject</button>
-    </tr>
-  </table>
+        <label>Welcome, {{employer._name}}</label>
+        <br>
+        <label>Your public key : {{employer._publicKey}}</label>
+        <br />
+        <label>Your address : {{employer._address}}</label>
+        <br />
+        <label>Your phone number : {{employer._phoneNumber}}</label>
+        <br />
+        <label>Your URL : {{employer._url}}</label>
+    </div>
+
+    <br />
+    <ngb-accordion #acc="ngbAccordion">
+
+        <ngb-panel id="toggle-1" title="Approved Experiences">
+            <!-- <ng-template ngbPanelContent>
+        <div *ngIf="isEmployerRegistered" style="margin:0 30px;">
+          <h2 style="text-align: center;">Approved</h2>
+          <table>
+            <tr>
+              <th>S.no</th>
+              <th>Employee Public Key</th>
+              <th>Employee Id</th>
+              <th>Designation</th>
+              <th>Salary</th>
+              <th>Project Title</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+            </tr>
+            <tr *ngFor="let exp of approvedExperiences; index as i">
+              <td>{{ i+1 }}</td>
+              <td>{{ exp._employeePublicKey }}</td>
+              <td>{{ exp._employeeId }}</td>
+              <td>{{ exp._designation }}</td>
+              <td>{{ exp._salary }}</td>
+              <td>{{ exp._projectTitle }}</td>
+              <td>{{ exp._startDate }}</td>
+              <td>{{ exp._endDate }}</td>
+            </tr>
+          </table>
+        </div>
+      </ng-template> -->
+            <ng-template ngbPanelContent>
+
+                <div fxLayout fxLayoutAlign="center center">
+                    <mat-form-field fxFlex="60%">
+                        <input matInput type="text" (keyup)="filterData($event, experienceType.APPROVED)"
+                            placeholder="Filter Approved Experiences">
+                    </mat-form-field>
+                </div>
+
+                <table mat-table #approvedExperiencesSortFun="matSort" [dataSource]="approvedExperiencesDataSource"
+                    class="mat-elevation-z8 table" matSort>
+
+                    <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="_expId">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Serial No. </th>
+                        <td mat-cell *matCellDef="let element"> {{element._expId}} </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="_employeePublicKey">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Public Key </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._employeePublicKey}} </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="_employeeId">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Id </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._employeeId}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_projectTitle">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Project Title </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._projectTitle}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_designation">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Designation</th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._designation}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_salary">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Salary </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._salary}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_startDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Start date </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._startDate}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_endDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._endDate}} </td>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="_employerPublicKey">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employer Public Key </th>
+            <td mat-cell *matCellDef="let element"> {{element._employerPublicKey}} </td>
+          </ng-container> -->
+
+                    <!-- <ng-container matColumnDef="_status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+            <td mat-cell *matCellDef="let element" class="all"> {{element._status}} </td>
+          </ng-container> -->
+
+                    <ng-container matColumnDef="_employerComments">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Employer comments </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._employerComments}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_employeeComments">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee comments </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._employeeComments}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </ng-template>
+        </ngb-panel>
+
+        <ngb-panel id="toggle-2" title="Rejected Experiences">
+            <ng-template ngbPanelContent>
+
+                <div fxLayout fxLayoutAlign="center center">
+                    <mat-form-field fxFlex="60%">
+                        <input matInput type="text" (keyup)="filterData($event, experienceType.REJECTED)"
+                            placeholder="Filter Rejected Experiences">
+                    </mat-form-field>
+                </div>
+
+                <table mat-table #rejectedExperiencesSortFun="matSort" [dataSource]="rejectedExperiencesDataSource"
+                    class="mat-elevation-z8 table" matSort>
+
+                    <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="_expId">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Serial No. </th>
+                        <td mat-cell *matCellDef="let element"> {{element._expId}} </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="_employeePublicKey">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Public Key </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._employeePublicKey}} </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="_employeeId">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Id </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._employeeId}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_projectTitle">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Project Title </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._projectTitle}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_designation">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Designation</th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._designation}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_salary">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Salary </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._salary}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_startDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Start date </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._startDate}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_endDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._endDate}} </td>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="_employerPublicKey">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employer Public Key </th>
+            <td mat-cell *matCellDef="let element"> {{element._employerPublicKey}} </td>
+          </ng-container> -->
+
+                    <!-- <ng-container matColumnDef="_status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+            <td mat-cell *matCellDef="let element" class="all"> {{element._status}} </td>
+          </ng-container> -->
+
+                    <ng-container matColumnDef="_employerComments">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Employer comments </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._employerComments}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_employeeComments">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee comments </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._employeeComments}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </ng-template>
+        </ngb-panel>
+
+        <ngb-panel id="toggle-3" title="Pending Experiences">
+            <ng-template ngbPanelContent>
+
+                <div fxLayout fxLayoutAlign="center center">
+                    <mat-form-field fxFlex="60%">
+                        <input matInput type="text" (keyup)="filterData($event, experienceType.PENDING)"
+                            placeholder="Filter Pending Experiences">
+                    </mat-form-field>
+                </div>
+
+                <table #pendingExperiencesSortFun="matSort" mat-table [dataSource]="pendingExperiencesDataSource"
+                    class="mat-elevation-z8 table " matSort>
+
+                    <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="_expId">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Serial No. </th>
+                        <td mat-cell *matCellDef="let element"> {{element._expId}} </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="_employeePublicKey">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Public Key </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._employeePublicKey}} </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="_employeeId">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Id </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._employeeId}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_projectTitle">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Project Title </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._projectTitle}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_designation">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Designation</th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._designation}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_salary">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Salary</th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._salary}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_startDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Start date </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._startDate}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_endDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._endDate}} </td>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="_employerPublicKey">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employer Public Key </th>
+            <td mat-cell *matCellDef="let element"> {{element._employerPublicKey}} </td>
+          </ng-container> -->
+
+                    <ng-container matColumnDef="_employeeComments">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee comments </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._employeeComments}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_employerCommentsNew">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                        <td mat-cell *matCellDef="let element; let i=index;" style="height: max-content;">
+                            <div style="font-size: 11px">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Comments</mat-label>
+                                    <input matInput [(ngModel)]="comments[i]" />
+                                </mat-form-field>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="approve">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                        <td mat-cell *matCellDef="let element; let i=index;">
+                            <button mat-raised-button class="approve"
+                                (click)="approve(element._expId, i)">Approve</button>
+                            <!-- (click)="approve(element._expId, input.value)" -->
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="reject">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                        <td mat-cell *matCellDef="let element; let i=index;">
+                            <button mat-raised-button class="reject" (click)="reject(element._expId, i)">Reject</button>
+                            <!-- (click)="reject(element._expId, input.value)" -->
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsPending"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsPending;"></tr>
+                </table>
+            </ng-template>
+        </ngb-panel>
+
+        <ngb-panel id="toggle-4" title="Search">
+            <ng-template ngbPanelContent>
+
+                <div fxLayout fxLayoutAlign="center center">
+                    <mat-form-field fxFlex="100%" [style.width.px]=200>
+                        <input matInput type="text" (keyup)="filterData($event, experienceType.ALL_APPROVED)"
+                            placeholder="Filter All Approved Experiences">
+                    </mat-form-field>
+                </div>
+
+                <table mat-table #allExperiencesSortFun="matSort" [dataSource]="allExperiencesDataSource"
+                    class="mat-elevation-z8 table" matSort>
+                    <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="_expId">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Serial No. </th>
+                        <td mat-cell *matCellDef="let element"> {{element._expId}} </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="_employeePublicKey">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Public Key </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._employeePublicKey}} </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="_employerPublicKey">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Employer Public Key </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._employerPublicKey}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_designation">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Designation</th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._designation}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_startDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Start date </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._startDate}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="_endDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date </th>
+                        <td mat-cell *matCellDef="let element" class="all"> {{element._endDate}} </td>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="_employerPublicKey">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employer Public Key </th>
+            <td mat-cell *matCellDef="let element"> {{element._employerPublicKey}} </td>
+          </ng-container> -->
+
+                    <!-- <ng-container matColumnDef="_status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+            <td mat-cell *matCellDef="let element" class="all"> {{element._status}} </td>
+          </ng-container> -->
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsAllApproved"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsAllApproved;"></tr>
+                </table>
+            </ng-template>
+        </ngb-panel>
+
+    </ngb-accordion>
 </div>
+<br />
+<br />
+
+
+<hr />
+<!-- <button class="btn btn-sm btn-outline-primary mr-2" (click)="acc.toggle('toggle-1')">Approved</button>
+<button class="btn btn-sm btn-outline-primary mr-2" (click)="acc.toggle('toggle-2')">Rejected</button>
+<button class="btn btn-sm btn-outline-primary mr-2" (click)="acc.toggle('toggle-3')">Pending</button> -->

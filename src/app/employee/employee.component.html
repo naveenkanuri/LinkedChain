@@ -1,4 +1,4 @@
-<div class="header" color="">
+<!-- <div class="header" color="">
   Welcome to Employee Portal!
 </div>
 
@@ -8,111 +8,328 @@
 <div *ngIf="this.signer" class="connect-button">
   <label>You have connected!</label>
   <br/>
-</div>
+</div> -->
 
 <!--<div class="employee">-->
 <!--  Employee Details = {{this.employerDetails}}-->
 <!--</div>-->
 
-<div *ngIf="!isEmployeeRegistered" class="forms">
-  <form [formGroup]="EmployeeForm" (ngSubmit)="addEmployee()">
-    <div class="addEmployee">
-<!--      Employee Details-->
-      <label for="employeeName">Employee Name</label>
-      <input id="employeeName" type="text" formControlName="EmployeeName">
-      <br/>
-      <label for="employeeId">Employee Aadhar Id</label>
-      <input id="employeeId" type="number" formControlName="EmployeeId">
-      <br/>
-      <label for="employeeAddress">Employee Address</label>
-      <input id="employeeAddress" type="text" formControlName="EmployeeAddress">
-      <br/>
-      <label for="employeePhone">Employee Phone Number</label>
-      <input id="employeePhone" type="text" formControlName="EmployeePhone">
-      <br/>
-      <label for="employeePublicKey">Employee Public Key</label>
-      <input id="employeePublicKey" type="text" formControlName="EmployeePublicKey">
-      <br/>
-      <br/>
-      <button class="button" type="submit">Save</button>
+<div *ngIf="!isEmployeeRegistered" class="forms pt-4">
+    <div class="jumbotron jumbotron-fluid  text-center">
+        <div class="container">
+            <h1 class="display-4">Employee Registration</h1>
+            <p class="lead">Please enter your details as a employee.</p>
+        </div>
     </div>
-  </form>
-</div>
+    <div class="align-items-center shadow align-content-center p-4">
 
-<br/>
-<div *ngIf="isEmployeeRegistered" class="EmployerDetails">
-  <label>You Name: {{employee._name}}</label>
-  <br/>
-  <label>Your public key : {{employee._publicKey}}</label>
-  <br/>
-  <label>Your Unique Id : {{employee._id}}</label>
-  <br/>
-  <label>Your phone number : {{employee._phoneNumber}}</label>
-  <br/>
-  <label>Your address : {{employee._address}}</label>
-</div>
-<br/>
+        <form [formGroup]="EmployeeForm" class="d-flex form-group justify-content-center
+    align-items-center shadow">
+            <div class="addEmployee">
+                <!--      Employee Details-->
+                <!-- <label for="employeePublicKey">Employee Public Key</label> -->
+                <br />
+                <mat-form-field appearance="fill">
+                    <mat-label>Employee Public Key</mat-label>
+                    <input id="employeePublicKey" matInput formControlName="EmployeePublicKey" required minlength="42"
+                        maxlength="42">
+                    <mat-error *ngIf="EmployeeForm.get('EmployeePublicKey')?.hasError('required')">
+                        Employee Public Key is Required!
+                    </mat-error>
+                    <mat-error *ngIf="EmployeeForm.get('EmployeePublicKey')?.hasError('minlength')">
+                        Employee Public Key must be 42 characters long!
+                    </mat-error>
+                </mat-form-field>
+                <br />
 
-<div *ngIf="isEmployeeRegistered" class="forms">
-  <form [formGroup]="ExperienceForm" (ngSubmit)="addExperienceDetails()">
-    <div class="addExperience">
-      <!--      WorkEx Details-->
-      <br/><br/><br/>
-      <label for="employeeCompanyId">Id given by the employer</label>
-      <input id="employeeCompanyId" type="text" formControlName="EmployeeCompanyId">
-      <br/>
-      <label for="projectTitle">Project Title</label>
-      <input id="projectTitle" type="text" formControlName="ProjectTitle">
-      <br/>
-      <label for="designation">Designation</label>
-      <input id="designation" type="text" formControlName="Designation">
-      <br/>
-      <label for="salary">Salary</label>
-      <input id="salary" type="number" formControlName="Salary">
-      <br/>
-      <label for="startDate">Start Date</label>
-      <input id="startDate" type="date" formControlName="StartDate">
-      <br/>
-      <label for="endDate">End Date</label>
-      <input id="endDate" type="date" formControlName="EndDate">
-      <br/>
-      <label for="employerPublicKey">Employer Public Key</label>
-      <input id="employerPublicKey" type="text" formControlName="EmployerPublicKey">
-      <br/>
-      <label for="employeeComments">Comments</label>
-      <input id="employeeComments" type="text" formControlName="EmployeeComments">
-      <br/>
-      <button class="button" type="submit">Save</button>
+                <!-- <label for="employeeId">Employee SSN</label> -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Employee SSN</mat-label>
+                    <input id="employeeId" matInput formControlName="EmployeeId" required minlength="9" maxlength="9">
+                    <mat-error *ngIf="EmployeeForm.get('EmployeeId')?.hasError('required')">
+                        Employee SSN is Required!
+                    </mat-error>
+                    <mat-error *ngIf="EmployeeForm.controls['EmployeeId'].errors?.pattern">
+                        Employee SSN must be 9 numbers long!
+                    </mat-error>
+                </mat-form-field>
+                <br />
+
+                <!-- <label for="employeeName">Employee Name</label> -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Employee Name</mat-label>
+                    <input id="employeeName" matInput formControlName="EmployeeName" required>
+                    <mat-error *ngIf="EmployeeForm.get('EmployeeName')?.hasError('required')">
+                        Employee Name is Required!
+                    </mat-error>
+                    <mat-error *ngIf="EmployeeForm.controls['EmployeeName'].errors?.pattern">
+                        Employee Name must only have letters!
+                    </mat-error>
+                </mat-form-field>
+                <br />
+
+                <!-- <label for="employeeAddress">Employee Address</label> -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Employee Address</mat-label>
+                    <input id="employeeAddress" matInput formControlName="EmployeeAddress" required>
+                    <mat-error *ngIf="EmployeeForm.get('EmployeeAddress')?.hasError('required')">
+                        Employee Address is Required!
+                    </mat-error>
+                </mat-form-field>
+                <br />
+
+                <!-- <label for="employeePhone">Employee Phone Number</label> -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Employee Phone</mat-label>
+                    <input id="employeePhone" matInput formControlName="EmployeePhone" required maxlength="10">
+                    <mat-error *ngIf="EmployeeForm.get('EmployeePhone')?.hasError('required')">
+                        Employee Phone is Required!
+                    </mat-error>
+                    <mat-error *ngIf="EmployeeForm.controls['EmployeePhone'].errors?.pattern">
+                        Employee Phone must be 10 digits only!
+                    </mat-error>
+                </mat-form-field>
+                <br />
+
+                <div class="d-flex form-group justify-content-center align-items-center">
+                    <button class="button rounded-pill btn btn-primary mb-2" [disabled]="!EmployeeForm.valid"
+                        mat-raised-button (click)="openDialogEmployeeRegistration()">
+                        Submit
+                    </button>
+
+                    <!-- <button class="button rounded-pill btn btn-primary mb-2" type="submit">Submit</button> -->
+                </div>
+            </div>
+        </form>
     </div>
-  </form>
 </div>
 
-<div *ngIf="isEmployeeRegistered" style="margin:0 30px;">
-  <h2 style="text-align: center;">Experiences</h2>
-  <table>
-    <tr>
-      <th>S.no</th>
-      <th>Employee Public Key</th>
-      <th>Employer Public Key</th>
-      <th>Employee Id</th>
-      <th>Designation</th>
-      <th>Salary</th>
-      <th>Project Title</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-      <th>Status</th>
-    </tr>
-    <tr *ngFor="let exp of allExperiences; index as i">
-      <td>{{ i+1 }}</td>
-      <td>{{ exp._employeePublicKey }}</td>
-      <td>{{ exp._employerPublicKey }}</td>
-      <td>{{ exp._employeeId }}</td>
-      <td>{{ exp._designation }}</td>
-      <td>{{ exp._salary }}</td>
-      <td>{{ exp._projectTitle }}</td>
-      <td>{{ exp._startDate }}</td>
-      <td>{{ exp._endDate }}</td>
-      <td>{{ exp._status }}</td>
-    </tr>
-  </table>
+<br />
+<div *ngIf="isEmployeeRegistered" class="p-4">
+
+    <div class="jumbotron jumbotron-fluid  text-center">
+        <div class="container">
+            <h1 class="display-4">Employee Profile</h1>
+            <p class="lead">Dashboard</p>
+        </div>
+    </div>
+    <div class="align-items-center shadow align-content-center p-4">
+
+        <label>Welcome, {{employee._name}}</label>
+        <br />
+        <label>Your public key : {{employee._publicKey}}</label>
+        <br />
+        <label>Your unique ID : {{employee._id}}</label>
+        <br />
+        <label>Your name: {{employee._name}}</label>
+        <br />
+        <label>Your address : {{employee._address}}</label>
+        <br />
+        <label>Your phone number : {{employee._phoneNumber}}</label>
+        <br />
+    </div>
+    <br />
+
+
+    <form [formGroup]="ExperienceForm" class="d-flex form-group justify-content-center align-items-center shadow">
+        <div class="addExperience">
+            <!--      WorkEx Details-->
+            <br /><br /><br />
+
+            <mat-form-field appearance="fill">
+                <mat-label>Employee Company ID</mat-label>
+                <input id="employeeCompanyId" matInput formControlName="EmployeeCompanyId" required>
+                <mat-error *ngIf="ExperienceForm.get('EmployeeCompanyId')?.hasError('required')">
+                    Employee Company ID is Required!
+                </mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field appearance="fill">
+                <mat-label>Project Title</mat-label>
+                <input id="projectTitle" matInput formControlName="ProjectTitle" required>
+                <mat-error *ngIf="ExperienceForm.get('ProjectTitle')?.hasError('required')">
+                    Project Title is Required!
+                </mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field appearance="fill">
+                <mat-label>Designation</mat-label>
+                <input id="designation" matInput formControlName="Designation" required>
+                <mat-error *ngIf="ExperienceForm.get('Designation')?.hasError('required')">
+                    Designation is Required!
+                </mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field appearance="fill">
+                <mat-label>Salary</mat-label>
+                <input id="salary" matInput formControlName="Salary" required>
+                <mat-error *ngIf="ExperienceForm.get('Salary')?.hasError('required')">
+                    Salary is Required!
+                </mat-error>
+                <mat-error *ngIf="ExperienceForm.controls['Salary'].errors?.pattern">
+                    Salary must be a number!
+                </mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Start and End Dates</mat-label>
+                <mat-date-range-input [rangePicker]="picker" required>
+                    <input id="startDate" matStartDate placeholder="Start date" formControlName="StartDate" required>
+                    <input id="endDate" matEndDate placeholder="End date" formControlName="EndDate" required>
+                </mat-date-range-input>
+                <mat-error *ngIf="ExperienceForm.get('StartDate')?.hasError('required')">
+                    Start Date is Required!
+                </mat-error>
+                <mat-error *ngIf="ExperienceForm.get('EndDate')?.hasError('required')">
+                    End Date is Required!
+                </mat-error>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Employer Public Key</mat-label>
+                <input id="employerPublicKey" matInput formControlName="EmployerPublicKey" required minlength="42">
+                <mat-error *ngIf="ExperienceForm.get('EmployerPublicKey')?.hasError('required')">
+                    Employer Public Key is Required!
+                </mat-error>
+                <mat-error *ngIf="ExperienceForm.get('EmployerPublicKey')?.hasError('minlength')">
+                    Employee Public Key must be 42 characters long!
+                </mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field appearance="fill">
+                <mat-label>Employee Comments</mat-label>
+                <input id="employeeComments" matInput formControlName="EmployeeComments">
+            </mat-form-field>
+
+
+            <br />
+            <div class="d-flex form-group justify-content-center align-items-center">
+                <button class="button rounded-pill btn btn-primary mb-2 mt-2" mat-raised-button
+                    (click)="openDialogEmployeeExperience()">
+                    Submit
+                </button>
+
+                <!-- <button class="button rounded-pill btn btn-primary mb-2" type="submit">Submit</button> -->
+            </div>
+        </div>
+    </form>
+
+    <div fxLayout fxLayoutAlign="center center">
+        <mat-form-field fxFlex="60%">
+            <input matInput type="text" (keyup)="filterData($event)" placeholder="Filter Experiences">
+        </mat-form-field>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table" matSort>
+
+        <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="_expId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Serial No. </th>
+            <td mat-cell *matCellDef="let element"> {{element._expId}} </td>
+        </ng-container>
+
+
+
+        <!-- Weight Column -->
+        <!-- <ng-container matColumnDef="_employeePublicKey">
+            <th mat-header-cell *matHeaderCellDef> Employee Public Key </th>
+            <td mat-cell *matCellDef="let element" class="all"> {{element._employeePublicKey}} </td>
+        </ng-container> -->
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="_employeeId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee ID </th>
+            <td mat-cell *matCellDef="let element" class="all"> {{element._employeeId}} </td>
+        </ng-container>
+        <ng-container matColumnDef="_projectTitle">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Project Title</th>
+            <td mat-cell *matCellDef="let element" class="all"> {{element._projectTitle}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="_designation">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Designation</th>
+            <td mat-cell *matCellDef="let element" class="all"> {{element._designation}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="_salary">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Salary </th>
+            <td mat-cell *matCellDef="let element" class="all"> {{element._salary}} </td>
+        </ng-container>
+
+
+
+        <ng-container matColumnDef="_startDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Start date </th>
+            <td mat-cell *matCellDef="let element" class="all"> {{element._startDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="_endDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date </th>
+            <td mat-cell *matCellDef="let element" class="all"> {{element._endDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="_employerPublicKey">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employer Public Key </th>
+            <td mat-cell *matCellDef="let element" class="all"> {{element._employerPublicKey}} </td>
+        </ng-container>
+        <ng-container matColumnDef="_status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+            <td mat-cell *matCellDef="let element" class="all"> {{element._status === 0 ? 'Pending' : (element._status
+                === 1 ? 'Approved' : 'Rejected') }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="_employerComments">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employer Comments </th>
+            <td mat-cell *matCellDef="let element" class="all"> {{element._employerComments}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="_employeeComments">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Comments </th>
+            <td mat-cell *matCellDef="let element" class="all"> {{element._employeeComments}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
 </div>
+
+<!-- <div *ngIf="isEmployeeRegistered" style="margin:0 30px;">
+    <h2 style="text-align: center;">Experiences</h2>
+    <table>
+      <tr>
+        <th>S.no</th>
+        <th>Employee Public Key</th>
+        <th>Employer Public Key</th>
+        <th>Employee Id</th>
+        <th>Designation</th>
+        <th>Salary</th>
+        <th>Project Title</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Status</th>
+      </tr>
+      <tr *ngFor="let exp of allExperiences; index as i">
+        <td>{{ i+1 }}</td>
+        <td>{{ exp._employeePublicKey }}</td>
+        <td>{{ exp._employerPublicKey }}</td>
+        <td>{{ exp._employeeId }}</td>
+        <td>{{ exp._designation }}</td>
+        <td>{{ exp._salary }}</td>
+        <td>{{ exp._projectTitle }}</td>
+        <td>{{ exp._startDate }}</td>
+        <td>{{ exp._endDate }}</td>
+        <td>{{ exp._status }}</td>
+      </tr>
+    </table>
+  </div> -->
